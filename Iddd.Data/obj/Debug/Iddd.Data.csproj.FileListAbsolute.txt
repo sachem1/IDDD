@@ -1,0 +1,16 @@
+H:\Personal\Project\Iddd\Iddd.Data\bin\Debug\Iddd.Data.dll.config
+H:\Personal\Project\Iddd\Iddd.Data\bin\Debug\Iddd.Data.dll
+H:\Personal\Project\Iddd\Iddd.Data\bin\Debug\Iddd.Data.pdb
+H:\Personal\Project\Iddd\Iddd.Data\bin\Debug\Antlr3.Runtime.dll
+H:\Personal\Project\Iddd\Iddd.Data\bin\Debug\Microsoft.Web.Infrastructure.dll
+H:\Personal\Project\Iddd\Iddd.Data\bin\Debug\Newtonsoft.Json.dll
+H:\Personal\Project\Iddd\Iddd.Data\bin\Debug\System.Web.Optimization.dll
+H:\Personal\Project\Iddd\Iddd.Data\bin\Debug\WebGrease.dll
+H:\Personal\Project\Iddd\Iddd.Data\bin\Debug\Antlr3.Runtime.pdb
+H:\Personal\Project\Iddd\Iddd.Data\bin\Debug\Newtonsoft.Json.xml
+H:\Personal\Project\Iddd\Iddd.Data\bin\Debug\System.Web.Optimization.xml
+H:\Personal\Project\Iddd\Iddd.Data\bin\Debug\zh-Hans\System.Web.Optimization.resources.dll
+H:\Personal\Project\Iddd\Iddd.Data\obj\Debug\Iddd.Data.dll
+H:\Personal\Project\Iddd\Iddd.Data\obj\Debug\Iddd.Data.pdb
+H:\Personal\Project\Iddd\Iddd.Data\obj\Debug\Iddd.Data.csprojResolveAssemblyReference.cache
+H:\Personal\Project\Iddd\Iddd.Data\obj\Debug\Iddd.Data.csproj.CoreCompileInputs.cache

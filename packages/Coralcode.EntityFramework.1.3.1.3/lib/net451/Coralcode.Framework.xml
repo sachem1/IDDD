@@ -1,0 +1,4509 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Coralcode.Framework</name>
+    </assembly>
+    <members>
+        <member name="M:Coralcode.Framework.Arithmetic.SortMethod.SortByDependencies``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Collections.Generic.IEnumerable{``0}})">
+            <summary>
+            拓扑排序
+            Sort a list by a topological sorting, which consider their  dependencies
+            </summary>
+            <typeparam name="T">The type of the members of values.</typeparam>
+            <param name="source">A list of objects to sort</param>
+            <param name="getDependencies">Function to resolve the dependencies</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Arithmetic.SortMethod.SortByDependenciesVisit``1(``0,System.Func{``0,System.Collections.Generic.IEnumerable{``0}},System.Collections.Generic.List{``0},System.Collections.Generic.Dictionary{``0,System.Boolean})">
+            <summary>
+            
+            </summary>
+            <typeparam name="T">The type of the members of values.</typeparam>
+            <param name="item">Item to resolve</param>
+            <param name="getDependencies">Function to resolve the dependencies</param>
+            <param name="sorted">List with the sortet items</param>
+            <param name="visited">Dictionary with the visited items</param>
+        </member>
+        <member name="T:Coralcode.Framework.Aspect.EventArgs`1">
+            <summary>
+            泛型事件参数
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Coralcode.Framework.Aspect.InjectAttribute.Name">
+            <summary>
+            注册的名字
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Aspect.InjectAttribute.RegisterType">
+            <summary>
+            依赖注入的类型
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Aspect.InjectAttribute.Condition">
+            <summary>
+            注册条件
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Aspect.InjectAttribute.AopType">
+            <summary>
+            aop类型
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Aspect.InjectAttribute.LifetimeManagerType">
+            <summary>
+            生命周期类型
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Aspect.RegisterCondition.IsRequire">
+            <summary>
+            是否必须
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Aspect.AopType">
+            <summary>
+            拦截类型
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Aspect.AopType.None">
+            <summary>
+            不拦截
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Aspect.AopType.VirtualMethodInterceptor">
+            <summary>
+            虚方法拦截
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Aspect.AopType.InterfaceInterceptor">
+            <summary>
+            接口拦截
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Aspect.AopType.TransparentProxyInterceptor">
+            <summary>
+            动态代理拦截
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Aspect.LifetimeManagerType.Transient">
+            <summary>
+            每次通过Resolve或ResolveAll调用对象的时候都会重新创建一个新的对象。
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Aspect.LifetimeManagerType.ContainerControlled">
+            <summary>
+            容器控制生命周期管理，这个生命周期管理器是RegisterInstance默认使用的生命周期管理器，也就是单件实例
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Aspect.LifetimeManagerType.Hierarchica">
+            <summary>
+            分层生命周期管理器，这个管理器类似于ContainerControlledLifetimeManager，
+            也是由UnityContainer来管理，也就是单件实例。
+            不过与ContainerControlledLifetimeManager不 同的是，
+            这个生命周期管理器是分层的，
+            因为Unity的容器时可以嵌套的，所以这个生命周期管理器就是针对这种情况，
+            当使用了这种生命周期管理器，
+            父容器 和子容器所维护的对象的生命周期是由各自的容器来管理
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Aspect.LifetimeManagerType.Externally">
+            <summary>
+            外部控制生命周期管理器，这个 生命周期管理允许你使用RegisterType和RegisterInstance来注册对象之间的关系，
+            但是其只会对对象保留一个弱引用，
+            其生命周期 交由外部控制，也就是意味着你可以将这个对象缓存或者销毁而不用在意UnityContainer，
+            而当其他地方没有强引用这个对象时，其会被GC给销毁 掉。
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Aspect.LifetimeManagerType.PerThread">
+            <summary>
+            每线程生命周期管理器，就是保证每个线程返回同一实例
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Aspect.LifetimeManagerType.PerResolve">
+            <summary>
+            其类似于 TransientLifetimeManager，但是其不同在于，
+            如果应用了这种生命周期管理器，
+            则在第一调用的时候会创建一个新的对象，
+            而再次通过 循环引用访问到的时候就会返回先前创建的对象实例（单件实例），
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Aspect.LifetimeManagerType.PerHttp">
+            <summary>
+            一个Http请求，多次Resolve只会创建一个对象
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Aspect.InstanceProviders.UnityInstanceProvider">
+            <summary>
+            The unity instance provider. This class provides
+            an extensibility point for creating instances of wcf
+            service.
+            <remarks>
+            The goal is to inject dependencies from the inception point
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.InstanceProviders.UnityInstanceProvider.#ctor(System.Type)">
+            <summary>
+            Create a new instance of unity instance provider
+            </summary>
+            <param name="serviceType">The service where we apply the instance provider</param>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.InstanceProviders.UnityInstanceProvider.GetInstance(System.ServiceModel.InstanceContext,System.ServiceModel.Channels.Message)">
+            <summary>
+            <see cref="T:System.ServiceModel.Dispatcher.IInstanceProvider"/>
+            </summary>
+            <param name="instanceContext"><see cref="T:System.ServiceModel.Dispatcher.IInstanceProvider"/></param>
+            <param name="message"><see cref="T:System.ServiceModel.Dispatcher.IInstanceProvider"/></param>
+            <returns><see cref="T:System.ServiceModel.Dispatcher.IInstanceProvider"/></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.InstanceProviders.UnityInstanceProvider.GetInstance(System.ServiceModel.InstanceContext)">
+            <summary>
+            <see cref="T:System.ServiceModel.Dispatcher.IInstanceProvider"/>
+            </summary>
+            <param name="instanceContext"><see cref="T:System.ServiceModel.Dispatcher.IInstanceProvider"/></param>
+            <returns><see cref="T:System.ServiceModel.Dispatcher.IInstanceProvider"/></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.InstanceProviders.UnityInstanceProvider.ReleaseInstance(System.ServiceModel.InstanceContext,System.Object)">
+            <summary>
+            <see cref="T:System.ServiceModel.Dispatcher.IInstanceProvider"/>
+            </summary>
+            <param name="instanceContext"><see cref="T:System.ServiceModel.Dispatcher.IInstanceProvider"/></param>
+            <param name="instance"><see cref="T:System.ServiceModel.Dispatcher.IInstanceProvider"/></param>
+        </member>
+        <member name="T:Coralcode.Framework.Aspect.InstanceProviders.UnityInstanceProviderServiceBehavior">
+            <summary>
+            Service behavior for adding Unity instance provider in each
+            endpoint dispatcher
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityAopAttribute.OnAfter(Microsoft.Practices.Unity.InterceptionExtension.IMethodInvocation)">
+            <summary>
+            调用之后的实现逻辑
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityAopAttribute.OnBefore(Microsoft.Practices.Unity.InterceptionExtension.IMethodInvocation)">
+            <summary>
+            调用之前的实现逻辑
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityAopAttribute.OnException(Microsoft.Practices.Unity.InterceptionExtension.IMethodInvocation,System.Exception)">
+            <summary>
+            调用出现异常的实现逻辑
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityAopAttribute.Invoke(Microsoft.Practices.Unity.InterceptionExtension.IMethodInvocation,Microsoft.Practices.Unity.InterceptionExtension.GetNextHandlerDelegate)">
+            <summary>
+            接口注入时候的拦截方法
+            </summary>
+            <param name="input"></param>
+            <param name="nextMethod"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityAopAttribute.Invoke(Microsoft.Practices.Unity.InterceptionExtension.IMethodInvocation,Microsoft.Practices.Unity.InterceptionExtension.GetNextInterceptionBehaviorDelegate)">
+            <summary>
+            虚方法注入的拦截方法
+            </summary>
+            <param name="input"></param>
+            <param name="nextMethod"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Aspect.Unity.UnityService">
+            <summary>
+            IOC容器
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Aspect.Unity.UnityService.Current">
+            <summary>
+                Get the current configured container
+            </summary>
+            <returns>Configured container</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityService.Regist">
+            <summary>
+            在当前模块中注册接口的实现
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityService.RegistComplete">
+            <summary>
+            在当前模块中注册应用程序启动事件
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityService.GetLifetimeManager(Coralcode.Framework.Aspect.LifetimeManagerType)">
+            <summary>
+            获取生命周期
+            </summary>
+            <param name="lifetimeManagerType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityService.GetInjectionMembers(Coralcode.Framework.Aspect.AopType,System.Type)">
+            <summary>
+            注入aop方法
+            </summary>
+            <param name="aopType"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityService.Register``2(System.String,System.Object[])">
+            <summary>
+                注册泛型类型
+            </summary>
+            <param name="injectionMembers">构造函数参数</param>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityService.RegisterType``2(System.String,System.Object[])">
+            <summary>
+                注册泛型类型
+            </summary>
+            <param name="name"></param>
+            <param name="injectionMembers">构造函数参数</param>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityService.RegisterType(System.String,System.Type,System.Type,System.Object[])">
+            <summary>
+            注册类型
+            </summary>
+            <param name="source"></param>
+            <param name="name"></param>
+            <param name="target"></param>
+            <param name="injectionMembers"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityService.RegisterType(System.Type,System.Type,System.Object[])">
+            <summary>
+            注册类型
+            </summary>
+            <param name="source"></param>
+            <param name="target"></param>
+            <param name="lifetimeManager"></param>
+            <param name="injectionMembers"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityService.RegisterType(System.Type,System.Object[])">
+            <summary>
+            注册类型
+            </summary>
+            <param name="injectionMembers"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityService.RegisterType(System.String,System.Type,System.Object[])">
+            <summary>
+            注册类型
+            </summary>
+            <param name="type"></param>
+            <param name="injectionMembers"></param>
+            <param name="name"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityService.Resolve(System.Type)">
+            <summary>
+            创建实例
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityService.Resolve``1">
+            <summary>
+            创建泛型实例
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Aspect.Unity.UnityService.Resolve``1(System.String)">
+            <summary>
+            创建泛型实例
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Coralcode.Framework.Cache.IAcquireContext.Monitor">
+            <summary>
+            监控
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Cache.CacheFactory">
+            <summary>
+            缓存工厂
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.CacheFactory.GetLocalCache">
+            <summary>
+            获取本地缓存
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.CacheFactory.GetRedisCache(System.String,System.String)">
+            <summary>
+            获取redis缓存组件
+            </summary>
+            <param name="dllName"></param>
+            <param name="sectionName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.CacheFactory.GetSetting(System.String,System.String)">
+            <summary>
+            读取配置文件
+            </summary>
+            <param name="dllName"></param>
+            <param name="sectionName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.ICache.Get``1(System.String,System.String,System.Func{``0},System.Nullable{System.Int32})">
+            <summary>
+            使用方式
+             Cache.Instance.GetFormCache(MethodBase.GetCurrentMethod().ToString(), Action);
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="contextKey"></param>
+            <param name="dataKey"></param>
+            <param name="action"></param>
+            <param name="expirationSeconds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.ICache.Get``1(System.String,System.String)">
+            <summary>
+            获取缓存对象
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="contextKey"></param>
+            <param name="dataKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.ICache.Get``1(System.String)">
+            <summary>
+            获取缓存对象
+            </summary>
+            <param name="contextKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.ICache.Remove(System.String,System.String)">
+            <summary>
+            获取缓存对象
+            </summary>
+            <param name="contextKey"></param>
+            <param name="dataKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.ICache.Set``1(System.String,System.String,``0,System.Nullable{System.Int32})">
+            <summary>
+            设置缓存对象
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="contextKey"></param>
+            <param name="dataKey"></param>
+            <param name="value"></param>
+            <param name="expirationSeconds"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.ICache.Remove(System.String)">
+            <summary>
+            移除缓存对象
+            </summary>
+            <param name="contextKey"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.ICache.Exist(System.String,System.String)">
+            <summary>
+            判断datakey是否存在
+            </summary>
+            <param name="contextKey"></param>
+            <param name="dataKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.ICache.ExistChildren(System.String)">
+            <summary>
+            判断key是否存在
+            </summary>
+            <param name="contextKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.Redis.RedisCache.GetLocal``1(System.String,System.String,System.Func{``0})">
+            <summary>
+            获取本地数据
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="contextKey"></param>
+            <param name="dataKey"></param>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.Redis.RedisCache.Get``1(System.String,System.String,System.Func{``0},System.Nullable{System.Int32})">
+            <inheritdoc />
+            <summary>
+            获取数据
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="contextKey"></param>
+            <param name="dataKey"></param>
+            <param name="action"></param>
+            <param name="expirationSeconds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.Redis.RedisCache.Get``1(System.String,System.String)">
+            <inheritdoc />
+            <summary>
+            直接获取数据
+            谨慎使用，请使用带委托的获取方法
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="contextKey"></param>
+            <param name="dataKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.Redis.RedisCache.Set``1(System.String,System.String,``0,System.Nullable{System.Int32})">
+            <inheritdoc />
+            <summary>
+            直接设置数据
+            谨慎使用，请使用带委托的获取方法
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="contextKey"></param>
+            <param name="dataKey"></param>
+            <param name="value"></param>
+            <param name="expirationSeconds">如果不设置过期时间则永不过期</param>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.Redis.RedisCache.Exist(System.String,System.String)">
+            <inheritdoc />
+            <summary>
+            判断key是否存在
+            </summary>
+            <param name="contextKey"></param>
+            <param name="dataKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.Redis.RedisCache.Remove(System.String,System.String)">
+            <inheritdoc />
+            <summary>
+            删除set中指定的key
+            </summary>
+            <param name="contextKey"></param>
+            <param name="dataKey"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.Redis.RedisCache.Get``1(System.String)">
+            <inheritdoc />
+            <summary>
+            获取全部缓存,
+            谨慎使用,
+            这里的key都是通过set,或者带委托的方法设置进去的
+            没有单独设置全部的方法
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="contextKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.Redis.RedisCache.ExistChildren(System.String)">
+            <inheritdoc />
+            <summary>
+            判断是否存在子节点
+            </summary>
+            <param name="contextKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.Redis.RedisCache.ResolveJson``1(StackExchange.Redis.RedisValue)">
+            <summary>
+            解析redisvalue，包含json解析
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Cache.Redis.RedisManager">
+            <summary>
+            redis 管理
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Cache.Redis.RedisManager._settings">
+            <summary>
+            redis配置文件信息
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Cache.Redis.RedisManager._connnections">
+            <summary>
+            redis链接信息
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.Redis.RedisManager.GetClient(Coralcode.Framework.Cache.Redis.RedisSetting)">
+            <summary>
+            客户端缓存操作对象
+            加锁同步执行
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Cache.Redis.RedisSetting.Version">
+            <summary>
+            版本
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Cache.Redis.RedisSetting.DefaultDb">
+            <summary>
+            默认数据库名称
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Cache.Redis.RedisSetting.ServerList">
+            <summary>
+            服务器列表
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Cache.Redis.RedisSetting.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Cache.Redis.RedisSetting.LocalCacheEnable">
+            <summary>
+            是否开启二级缓存
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Cache.Redis.RedisSetting.LocalCacheTimeout">
+            <summary>
+            超时时间秒
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Cache.ISignals">
+            <summary>
+            标志量
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.ISignals.Trigger``1(``0)">
+            <summary>
+            触发
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="signal"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Cache.ISignals.When``1(``0)">
+            <summary>
+            预定
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="signal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DynamicRepository.BaseDynamicQueryRepository`1.GetFirst(Coralcode.Framework.Data.DynamicRepository.IDynamicSpecification{`0})">
+            <summary>
+            根据规约获取第一个实体
+            </summary>
+            <param name="specification"></param>
+            <returns>实体或者null</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DynamicRepository.BaseDynamicQueryRepository`1.GetSingle(Coralcode.Framework.Data.DynamicRepository.IDynamicSpecification{`0})">
+            <summary>
+            获取单个实体
+            如果存在多个会给出异常
+            </summary>
+            <param name="specification"></param>
+            <returns>实体或者null</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DynamicRepository.BaseDynamicQueryRepository`1.GetLast(Coralcode.Framework.Data.DynamicRepository.IDynamicSpecification{`0})">
+            <summary>
+            获取最后一个实体
+            </summary>
+            <param name="specification"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DynamicRepository.BaseDynamicQueryRepository`1.GetCount(Coralcode.Framework.Data.DynamicRepository.IDynamicSpecification{`0})">
+            <summary>
+            获取实体的个数
+            </summary>
+            <param name="specification"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DynamicRepository.BaseDynamicQueryRepository`1.GetAll">
+             <summary>
+            获取所有的实体
+             </summary>
+             <returns>List of selected elements</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DynamicRepository.BaseDynamicQueryRepository`1.DynamicGetAll(Coralcode.Framework.Data.DynamicRepository.IDynamicRouter)">
+            <summary>
+            动态获取所有
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DynamicRepository.BaseDynamicQueryRepository`1.GetAllMatching(Coralcode.Framework.Data.DynamicRepository.IDynamicSpecification{`0})">
+            <summary>
+            根据规约查询
+            </summary>
+            <param name="specification"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DynamicRepository.BaseDynamicQueryRepository`1.GetPaged(System.Int32,System.Int32,Coralcode.Framework.Data.DynamicRepository.IDynamicSpecification{`0},Coralcode.Framework.Data.Core.SortExpression{`0})">
+             <summary>
+            获取分页数据
+             </summary>
+             <param name="pageIndex">页码</param>
+             <param name="pageCount">页大小</param>
+             <param name="specification">条件</param>
+             <param name="orderByExpressions">是否排序</param>
+             <returns>实体的分页数据</returns>
+        </member>
+        <member name="T:Coralcode.Framework.Data.DynamicRepository.IDynamicCommandRepository`1">
+            <summary>
+            提共增删改的仓储
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="T:Coralcode.Framework.Data.DynamicRepository.IDynamicQueryRepository`1">
+            <summary>
+            只提供查询的仓储
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="T:Coralcode.Framework.Data.DynamicRepository.BaseDynamicRepository`1">
+            <summary>
+            包含查询和操作的仓储
+            </summary>
+            <typeparam name="TEntity">Type of entity for this repository </typeparam>
+        </member>
+        <member name="P:Coralcode.Framework.Data.DynamicRepository.BaseDynamicRepository`1.UnitOfWork">
+             <summary>
+            工作单元
+             </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DynamicRepository.BaseDynamicRepository`1.Add(`0)">
+            <summary>
+            添加实体
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DynamicRepository.BaseDynamicRepository`1.AddRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            添加实体
+            </summary>
+            <param name="items"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DynamicRepository.BaseDynamicRepository`1.Remove(`0)">
+            <summary>
+            删除实体 
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DynamicRepository.BaseDynamicRepository`1.RemoveRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            删除实体
+            </summary>
+            <param name="items"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DynamicRepository.BaseDynamicRepository`1.RemoveRange(System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary>
+            删除实体
+            </summary>
+            <param name="ids"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DynamicRepository.BaseDynamicRepository`1.Remove(System.Int64)">
+            <summary>
+            根据主键删除实体
+            </summary>
+            <param name="id">主键</param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DynamicRepository.BaseDynamicRepository`1.Modify(`0)">
+            <summary>
+            更改实体
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DynamicRepository.BaseDynamicRepository`1.ModifyRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            更新实体
+            </summary>
+            <param name="items"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DynamicRepository.BaseDynamicRepository`1.Get(System.Int64)">
+            <summary>
+            根据主键获取实体
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Data.DynamicRepository.IDynamicRepository`1">
+            <summary>
+            包含查询和操作的仓储
+            </summary>
+            <typeparam name="TEntity">Type of entity for this repository </typeparam>
+        </member>
+        <member name="T:Coralcode.Framework.Data.DynamicRepository.IDynamicRouter">
+            <summary>
+            分库的策略
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Data.DynamicRepository.IDynamicRouter.Coden">
+            <summary>
+            分库的策略因子
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Data.DynamicRepository.SampleRouter.Coden">
+            <summary>
+            分库的策略因子
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DefaultDbConfigLoader.GetDynamicDbConfigByRouter(Coralcode.Framework.Data.DbConfig,Coralcode.Framework.Data.DynamicRepository.IDynamicRouter)">
+            <summary>
+            根据路由获取数据库连接配置
+            </summary>
+            <param name="staticConfig">静态配置</param>
+            <param name="router">动态路由</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DefaultDbConfigLoader.GetDynamicDbConfigs(Coralcode.Framework.Data.DbConfig)">
+            <summary>
+            获取所有静态配置相同的动态配置
+            </summary>
+            <param name="staticConfig">静态配置</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DefaultDbConfigLoader.GetDynamicDbConfigByNumber(Coralcode.Framework.Data.DbConfig,System.Int16)">
+            <summary>
+            根据动态路由编号获取配置
+            </summary>
+            <param name="staticConfig">静态配置</param>
+            <param name="number">动态编号</param>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Data.IDbConfigLoader">
+            <summary>
+            配置文件加载器
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.IDbConfigLoader.BuildStaticConfigs">
+            <summary>
+            加载所有的配置文件
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.IDbConfigLoader.GetDynamicDbConfigByRouter(Coralcode.Framework.Data.DbConfig,Coralcode.Framework.Data.DynamicRepository.IDynamicRouter)">
+            <summary>
+            根据路由获取数据库连接配置
+            </summary>
+            <param name="staticConfig">静态配置</param>
+            <param name="router">动态路由</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.IDbConfigLoader.GetDynamicDbConfigs(Coralcode.Framework.Data.DbConfig)">
+            <summary>
+            获取所有静态配置相同的动态配置
+            </summary>
+            <param name="staticConfig">静态配置</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.IDbConfigLoader.GetDynamicDbConfigByNumber(Coralcode.Framework.Data.DbConfig,System.Int16)">
+            <summary>
+            获取配置
+            </summary>
+            <param name="staticConfig">静态配置</param>
+            <param name="number">动态编号</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DbFactory.LoadStaticMapping">
+            <summary>
+            加载静态配置映射
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DbFactory.GetDynamicDbConfig(System.Type,Coralcode.Framework.Data.DynamicRepository.IDynamicRouter)">
+            <summary>
+            根据路由获取动态配置
+            </summary>
+            <param name="type"></param>
+            <param name="router"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DbFactory.GetDynamicDbConfig(System.Type,System.Int64)">
+            <summary>
+            根据id获取动态配置
+            </summary>
+            <param name="type"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DbFactory.GetDynamicDbConfigByNumber(System.Type,System.Int16)">
+            <summary>
+            根据id获取动态配置
+            </summary>
+            <param name="type"></param>
+            <param name="number"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DbFactory.GetDynamicDbConfigs(System.Type)">
+            <summary>
+            根据类型获取动态配置
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DbFactory.AnalysisNumber(System.Int64)">
+            <summary>
+            根据id分析出number
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DbFactory.GeneralId">
+            <summary>
+            生成静态分库的id
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Coralcode.Framework.Data.DbConfig.Number">
+            <summary>
+            编号
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Data.DbConfig.StaticCoden">
+            <summary>
+            静态分库因子
+            垂直分库因子
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Data.DbConfig.DynamicCoden">
+            <summary>
+            动态分库因子
+            水平分库因子
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Data.DbConfig.NameOrConnectionString">
+            <summary>
+            数据库连接字符串
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Data.DbConfig.WriteConnectionString">
+            <summary>
+            只写数据库连接字符串
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Data.DbConfig.ReadConnectionString">
+            <summary>
+            只读数据库连接字符串
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Data.DbConfig.AutoMerageDataBase">
+            <summary>
+            是否自动迁移数据
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Data.DbConfig.UnEncoded">
+            <summary>
+            是否未加密
+            默认是false;所以默认是加密的
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Data.DbConfig.CommandTimeout">
+            <summary>
+            执行超时时间
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Data.DbMode.Write">
+            <summary>
+            只读
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Data.DbMode.Read">
+            <summary>
+            只写
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DbModelExtensions.IsReadOnly(Coralcode.Framework.Data.DbMode)">
+            <summary>
+            只读
+            </summary>
+            <param name="mode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DbModelExtensions.CanRead(Coralcode.Framework.Data.DbMode)">
+            <summary>
+            可以读,对写入无限制
+            </summary>
+            <param name="mode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DbModelExtensions.IsWriteOnly(Coralcode.Framework.Data.DbMode)">
+            <summary>
+            只写入
+            </summary>
+            <param name="mode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DbModelExtensions.CanWrite(Coralcode.Framework.Data.DbMode)">
+            <summary>
+            可以写，对读无限制
+            </summary>
+            <param name="mode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.DbModelExtensions.IsReadAndWrite(Coralcode.Framework.Data.DbMode)">
+            <summary>
+            可以同事读写
+            </summary>
+            <param name="mode"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Data.SofeDelete.SoftDeleteEntity">
+            <summary>
+            软删除实体
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Data.SofeDelete.SoftDeleteEntity.IsDeleted">
+            <summary>
+            是否已删除
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Data.SofeDelete.ISoftDelete">
+            <summary>
+            软删除实体
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Data.SofeDelete.ISoftDelete.IsDeleted">
+            <summary>
+            是否已删除
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.BaseStaticQueryRepository`1.GetFirst(Coralcode.Framework.Data.Specification.ISpecification{`0})">
+            <summary>
+            根据规约获取第一个实体
+            </summary>
+            <param name="specification"></param>
+            <returns>实体或者null</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.BaseStaticQueryRepository`1.GetSingle(Coralcode.Framework.Data.Specification.ISpecification{`0})">
+            <summary>
+            获取单个实体
+            如果存在多个会给出异常
+            </summary>
+            <param name="specification"></param>
+            <returns>实体或者null</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.BaseStaticQueryRepository`1.GetLast(Coralcode.Framework.Data.Specification.ISpecification{`0})">
+            <summary>
+            获取最后一个实体
+            </summary>
+            <param name="specification"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.BaseStaticQueryRepository`1.GetCount(Coralcode.Framework.Data.Specification.ISpecification{`0})">
+            <summary>
+            获取实体的个数
+            </summary>
+            <param name="specification"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.BaseStaticQueryRepository`1.GetAll">
+             <summary>
+            获取所有的实体
+             </summary>
+             <returns>List of selected elements</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.BaseStaticQueryRepository`1.GetAllMatching(Coralcode.Framework.Data.Specification.ISpecification{`0})">
+            <summary>
+            根据规约查询
+            </summary>
+            <param name="specification"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.BaseStaticQueryRepository`1.GetPaged(System.Int32,System.Int32,Coralcode.Framework.Data.Specification.ISpecification{`0},Coralcode.Framework.Data.Core.SortExpression{`0})">
+             <summary>
+            获取分页数据
+             </summary>
+             <param name="pageIndex">页码</param>
+             <param name="pageCount">页大小</param>
+             <param name="specification">条件</param>
+             <param name="orderByExpressions">是否排序</param>
+             <returns>实体的分页数据</returns>
+        </member>
+        <member name="P:Coralcode.Framework.Data.StaticRepository.BaseStaticRepository`1.UnitOfWork">
+             <summary>
+            工作单元
+             </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.BaseStaticRepository`1.Add(`0)">
+            <summary>
+            添加实体
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.BaseStaticRepository`1.AddRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            添加实体
+            </summary>
+            <param name="items"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.BaseStaticRepository`1.Remove(`0)">
+            <summary>
+            删除实体 
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.BaseStaticRepository`1.RemoveRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            删除实体
+            </summary>
+            <param name="items"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.BaseStaticRepository`1.RemoveRange(System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary>
+            删除实体
+            </summary>
+            <param name="ids"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.BaseStaticRepository`1.Remove(System.Int64)">
+            <summary>
+            根据主键删除实体
+            </summary>
+            <param name="id">主键</param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.BaseStaticRepository`1.Modify(`0)">
+            <summary>
+            更改实体
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.BaseStaticRepository`1.ModifyRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            更新实体
+            </summary>
+            <param name="items"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.BaseStaticRepository`1.Get(System.Int64)">
+            <summary>
+            根据主键获取实体
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Data.StaticRepository.IStaticCommandRepository`1">
+            <summary>
+            提共增删改的仓储
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.MemoryUnitOfWork.Commit">
+            <summary>
+            提交请求
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.MemoryUnitOfWork.CommitAndRefreshChanges">
+            <summary>
+            提交所有请求并处理乐观所的问题
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.StaticRepository.MemoryUnitOfWork.RollbackChanges">
+            <summary>
+            回滚所有的请求
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Data.StaticRepository.IStaticQueryRepository`1">
+            <summary>
+            只提供查询的仓储
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="T:Coralcode.Framework.Data.StaticRepository.IStaticRepository`1">
+            <summary>
+            包含查询和操作的仓储
+            </summary>
+            <typeparam name="TEntity">Type of entity for this repository </typeparam>
+        </member>
+        <member name="T:Coralcode.Framework.Data.DbMetaData.ViewDataColumn">
+            <summary>
+            视图列
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.IdentityGenerator.NewSequentialGuid">
+            <summary>
+            This algorithm generates secuential GUIDs across system boundaries, ideal for databases 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.IdentityGenerator.NextId(System.Int16)">
+            <summary>
+            
+            </summary>
+            <param name="number"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.IdentityGenerator.GetIdList(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="block"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.IdentityGenerator.GetSkewResult(System.Int16,System.DateTime)">
+            <summary>
+            AppId + AppNode + Time + Count + DataNode
+            7 + 4 + 32 + 14 + 6
+            </summary>
+            <param name="num">分库值</param>
+            <param name="now">时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.IdentityGenerator.CalculateSkew(System.Int64,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="num"></param>
+            <param name="offset"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Coralcode.Framework.Data.Core.SortExpression`1._sortList">
+            <summary>
+            key:属性名，value,true为升序，false为降序
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.SortExpression`1.IsNeedSort">
+            <summary>
+            如果为空则不需要排序
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Data.Core.ICommandRepository`1">
+            <summary>
+            提共增删改的仓储
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="P:Coralcode.Framework.Data.Core.ICommandRepository`1.UnitOfWork">
+             <summary>
+            工作单元
+             </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.ICommandRepository`1.Add(`0)">
+            <summary>
+            添加实体
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.ICommandRepository`1.AddRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            添加实体
+            </summary>
+            <param name="items"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.ICommandRepository`1.Remove(`0)">
+            <summary>
+            删除实体 
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.ICommandRepository`1.RemoveRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            删除实体
+            </summary>
+            <param name="items"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.ICommandRepository`1.RemoveRange(System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary>
+            删除实体
+            </summary>
+            <param name="ids"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.ICommandRepository`1.Remove(System.Int64)">
+            <summary>
+            根据主键删除实体
+            </summary>
+            <param name="id">主键</param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.ICommandRepository`1.Modify(`0)">
+            <summary>
+            更改实体
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.ICommandRepository`1.ModifyRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            更新实体
+            </summary>
+            <param name="items"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.ICommandRepository`1.Get(System.Int64)">
+            <summary>
+            根据主键获取实体
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Data.Core.IQueryRepository`2">
+            <summary>
+            只提供查询的仓储
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <typeparam name="TSpecification"></typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.IQueryRepository`2.GetFirst(`1)">
+            <summary>
+            根据规约获取第一个实体
+            </summary>
+            <param name="specification"></param>
+            <returns>实体或者null</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.IQueryRepository`2.GetSingle(`1)">
+            <summary>
+            获取单个实体
+            如果存在多个会给出异常
+            </summary>
+            <param name="specification"></param>
+            <returns>实体或者null</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.IQueryRepository`2.GetLast(`1)">
+            <summary>
+            获取最后一个实体
+            </summary>
+            <param name="specification"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.IQueryRepository`2.GetCount(`1)">
+            <summary>
+            获取实体的个数
+            </summary>
+            <param name="specification"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.IQueryRepository`2.GetAll">
+             <summary>
+            获取所有的实体
+             </summary>
+             <returns>List of selected elements</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.IQueryRepository`2.GetAllMatching(`1)">
+            <summary>
+            根据规约查询
+            </summary>
+            <param name="specification"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.IQueryRepository`2.GetPaged(System.Int32,System.Int32,`1,Coralcode.Framework.Data.Core.SortExpression{`0})">
+             <summary>
+            获取分页数据
+             </summary>
+             <param name="pageIndex">页码</param>
+             <param name="pageCount">页大小</param>
+             <param name="specification">条件</param>
+             <param name="orderByExpressions">是否排序</param>
+             <returns>实体的分页数据</returns>
+        </member>
+        <member name="T:Coralcode.Framework.Data.Core.IRepository`2">
+            <summary>
+            包含查询和操作的仓储
+            </summary>
+            <typeparam name="TEntity">Type of entity for this repository </typeparam>
+            <typeparam name="TSpecification"></typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.IUnitOfWork.Commit">
+            <summary>
+            提交请求
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.IUnitOfWork.CommitAndRefreshChanges">
+            <summary>
+            提交所有请求并处理乐观所的问题
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.IUnitOfWork.RollbackChanges">
+            <summary>
+            回滚所有的请求
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Data.Core.Entity">
+            <summary>
+            Base class for entities
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Data.Core.Entity.Id">
+            <summary>
+            Get the persisten object identifier
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.Entity.IsTransient">
+            <summary>
+            Check if this entity is transient, ie, without identity at this moment
+            </summary>
+            <returns>True if entity is transient, else false</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.Entity.GenerateNewIdentity">
+            <summary>
+            Generate identity for this entity
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.Entity.ChangeCurrentIdentity(System.Int64)">
+            <summary>
+            Change current identity for a new non transient identity
+            </summary>
+            <param name="identity">the new identity</param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.Entity.Equals(System.Object)">
+            <summary>
+            <see cref="M:System.Object.Equals"/>
+            </summary>
+            <param name="obj"><see cref="M:System.Object.Equals"/></param>
+            <returns><see cref="M:System.Object.Equals"/></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Core.Entity.GetHashCode">
+            <summary>
+            <see cref="M:System.Object.GetHashCode"/>
+            </summary>
+            <returns><see cref="M:System.Object.GetHashCode"/></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Data.Core.IEntityConfiguration">
+            <summary>
+            用于自定义配置加载
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Data.Specification.AndSpecification`1">
+            <summary>
+            A logic AND Specification
+            </summary>
+            <typeparam name="T">Type of entity that check this specification</typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.AndSpecification`1.#ctor(Coralcode.Framework.Data.Specification.ISpecification{`0},Coralcode.Framework.Data.Specification.ISpecification{`0})">
+            <summary>
+            Default constructor for AndSpecification
+            </summary>
+            <param name="leftSide">Left side specification</param>
+            <param name="rightSide">Right side specification</param>
+        </member>
+        <member name="P:Coralcode.Framework.Data.Specification.AndSpecification`1.LeftSideSpecification">
+            <summary>
+            Left side specification
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Data.Specification.AndSpecification`1.RightSideSpecification">
+            <summary>
+            Right side specification
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.AndSpecification`1.SatisfiedBy">
+            <summary>
+            <see cref="T:Coralcode.Framework.Data.Specification.ISpecification`1"/>
+            </summary>
+            <returns><see cref="T:Coralcode.Framework.Data.Specification.ISpecification`1"/></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Data.Specification.CompositeSpecification`1">
+            <summary>
+            Base class for composite specifications
+            </summary>
+            <typeparam name="TEntity">Type of entity that check this specification</typeparam>
+        </member>
+        <member name="P:Coralcode.Framework.Data.Specification.CompositeSpecification`1.LeftSideSpecification">
+            <summary>
+            Left side specification for this composite element
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Data.Specification.CompositeSpecification`1.RightSideSpecification">
+            <summary>
+            Right side specification for this composite element
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Data.Specification.DirectSpecification`1">
+            <summary>
+            A Direct Specification is a simple implementation
+            of specification that acquire this from a lambda expression
+            in  constructor
+            </summary>
+            <typeparam name="TEntity">Type of entity that check this specification</typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.DirectSpecification`1.#ctor(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Default constructor for Direct Specification
+            </summary>
+            <param name="matchingCriteria">A Matching Criteria</param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.DirectSpecification`1.SatisfiedBy">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Data.Specification.ExpressionBuilder">
+            <summary>
+            Extension methods for adding AND and OR with parameters rebinder
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.ExpressionBuilder.Compose``1(System.Linq.Expressions.Expression{``0},System.Linq.Expressions.Expression{``0},System.Func{System.Linq.Expressions.Expression,System.Linq.Expressions.Expression,System.Linq.Expressions.Expression})">
+            <summary>
+            Compose two expressions and merge all in a new expression
+            </summary>
+            <typeparam name="T">Type of params in expression</typeparam>
+            <param name="first">Expression instance</param>
+            <param name="second">Expression to merge</param>
+            <param name="merge">Function to merge</param>
+            <returns>New merged expression</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.ExpressionBuilder.And``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            And operator
+            </summary>
+            <typeparam name="T">Type of params in expression</typeparam>
+            <param name="first">Right Expression in AND operation</param>
+            <param name="second">Left Expression in And operation</param>
+            <returns>New AND expression</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.ExpressionBuilder.Or``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            Or operator
+            </summary>
+            <typeparam name="T">Type of param in expression</typeparam>
+            <param name="first">Right expression in OR operation</param>
+            <param name="second">Left expression in OR operation</param>
+            <returns>New Or expressions</returns>
+        </member>
+        <member name="T:Coralcode.Framework.Data.Specification.ISpecification`1">
+            <summary>
+            Base contract for Specification pattern, for more information
+            about this pattern see http://martinfowler.com/apsupp/spec.pdf
+            or http://en.wikipedia.org/wiki/Specification_pattern.
+            This is really a variant implementation where we have added Linq and
+            lambda expression into this pattern.
+            </summary>
+            <typeparam name="TEntity">Type of entity</typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.ISpecification`1.SatisfiedBy">
+            <summary>
+            Check if this specification is satisfied by a 
+            specific expression lambda
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Data.Specification.NotSpecification`1">
+            <summary>
+            NotEspecification convert a original
+            specification with NOT logic operator
+            </summary>
+            <typeparam name="TEntity">Type of element for this specificaiton</typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.NotSpecification`1.#ctor(Coralcode.Framework.Data.Specification.ISpecification{`0})">
+            <summary>
+            Constructor for NotSpecificaiton
+            </summary>
+            <param name="originalSpecification">Original specification</param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.NotSpecification`1.#ctor(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Constructor for NotSpecification
+            </summary>
+            <param name="originalSpecification">Original specificaiton</param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.NotSpecification`1.SatisfiedBy">
+            <summary>
+            <see cref="T:Coralcode.Framework.Data.Specification.ISpecification`1"/>
+            </summary>
+            <returns><see cref="T:Coralcode.Framework.Data.Specification.ISpecification`1"/></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Data.Specification.OrSpecification`1">
+            <summary>
+            A Logic OR Specification
+            </summary>
+            <typeparam name="T">Type of entity that check this specification</typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.OrSpecification`1.#ctor(Coralcode.Framework.Data.Specification.ISpecification{`0},Coralcode.Framework.Data.Specification.ISpecification{`0})">
+            <summary>
+            Default constructor for AndSpecification
+            </summary>
+            <param name="leftSide">Left side specification</param>
+            <param name="rightSide">Right side specification</param>
+        </member>
+        <member name="P:Coralcode.Framework.Data.Specification.OrSpecification`1.LeftSideSpecification">
+            <summary>
+            Left side specification
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Data.Specification.OrSpecification`1.RightSideSpecification">
+            <summary>
+            Righ side specification
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.OrSpecification`1.SatisfiedBy">
+            <summary>
+            <see cref="T:Coralcode.Framework.Data.Specification.ISpecification`1"/>
+            </summary>
+            <returns><see cref="T:Coralcode.Framework.Data.Specification.ISpecification`1"/></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Data.Specification.ParameterRebinder">
+            <summary>
+            Helper for rebinder parameters without use Invoke method in expressions 
+            ( this methods is not supported in all linq query providers, 
+            for example in Linq2Entities is not supported)
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.ParameterRebinder.#ctor(System.Collections.Generic.Dictionary{System.Linq.Expressions.ParameterExpression,System.Linq.Expressions.ParameterExpression})">
+            <summary>
+            Default construcotr
+            </summary>
+            <param name="map">Map specification</param>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.ParameterRebinder.ReplaceParameters(System.Collections.Generic.Dictionary{System.Linq.Expressions.ParameterExpression,System.Linq.Expressions.ParameterExpression},System.Linq.Expressions.Expression)">
+            <summary>
+            Replate parameters in expression with a Map information
+            </summary>
+            <param name="map">Map information</param>
+            <param name="exp">Expression to replace parameters</param>
+            <returns>Expression with parameters replaced</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.ParameterRebinder.VisitParameter(System.Linq.Expressions.ParameterExpression)">
+            <summary>
+            Visit pattern method
+            </summary>
+            <param name="p">A Parameter expression</param>
+            <returns>New visited expression</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.Specification`1.SatisfiedBy">
+            <summary>
+            IsSatisFied Specification pattern method,
+            </summary>
+            <returns>Expression that satisfy this specification</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.Specification`1.op_BitwiseAnd(Coralcode.Framework.Data.Specification.Specification{`0},Coralcode.Framework.Data.Specification.Specification{`0})">
+            <summary>
+             And operator
+            </summary>
+            <param name="leftSideSpecification">left operand in this AND operation</param>
+            <param name="rightSideSpecification">right operand in this AND operation</param>
+            <returns>New specification</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.Specification`1.op_BitwiseOr(Coralcode.Framework.Data.Specification.Specification{`0},Coralcode.Framework.Data.Specification.Specification{`0})">
+            <summary>
+            Or operator
+            </summary>
+            <param name="leftSideSpecification">left operand in this OR operation</param>
+            <param name="rightSideSpecification">left operand in this OR operation</param>
+            <returns>New specification </returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.Specification`1.op_LogicalNot(Coralcode.Framework.Data.Specification.Specification{`0})">
+            <summary>
+            Not specification
+            </summary>
+            <param name="specification">Specification to negate</param>
+            <returns>New specification</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.Specification`1.op_False(Coralcode.Framework.Data.Specification.Specification{`0})">
+            <summary>
+            Override operator false, only for support AND OR operators
+            </summary>
+            <param name="specification">Specification instance</param>
+            <returns>See False operator in C#</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.Specification`1.op_True(Coralcode.Framework.Data.Specification.Specification{`0})">
+            <summary>
+            Override operator True, only for support AND OR operators
+            </summary>
+            <param name="specification">Specification instance</param>
+            <returns>See True operator in C#</returns>
+        </member>
+        <member name="T:Coralcode.Framework.Data.Specification.TrueSpecification`1">
+            <summary>
+            True specification
+            </summary>
+            <typeparam name="TEntity">Type of entity in this specification</typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Specification.TrueSpecification`1.SatisfiedBy">
+            <summary>
+            <see cref="T:Coralcode.Framework.Data.Specification.Specification`1"/>
+            </summary>
+            <returns><see cref="T:Coralcode.Framework.Data.Specification.Specification`1"/></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Extension.IQuery.GetDataTable``1(System.String,System.Object[])">
+            <summary>
+            根据存储过程获取DataTable
+            如果执行sql的话，使用sqlparameter参数
+            如果是分库，请在参数中提供IBranchRouter参数
+            </summary>
+            <param name="queryString"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Data.Extension.IQuery.GetCount``1(System.String,System.Object[])">
+            <summary>
+            根据存储过程获取DataTable
+            如果执行sql的话，使用sqlparameter参数
+            如果是分库，请在参数中提供IBranchRouter参数
+            </summary>
+            <param name="queryString"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Common.CoralConvert.Convert(System.Object,System.Type,System.Object@)">
+            <summary>
+            数据转换
+            </summary>
+            <param name="source">源值</param>
+            <param name="conversionType">类型</param>
+            <param name="dest">目标值</param>
+            <returns></returns>
+        </member>
+        <member name="F:Coralcode.Framework.Common.StaticString.CustomSite">
+            <summary>
+            客户站点的缓存信息
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Common.StaticString.SubsidiaryOrgan">
+            <summary>
+            估价机构数据
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Common.StaticString.Meun">
+            <summary>
+            菜单信息
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Common.StaticString.UserInfoDetail">
+            <summary>
+            获取用户的详细信息
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Common.StaticString.SessionLoginInfo">
+            <summary>
+            获取Session中用户信息 KEY
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Common.StaticString.Product">
+            <summary>
+            获取用户产品信息
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Common.StaticString.DefaultRedisConfigDll">
+            <summary>
+            默认的reids配置dll
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Common.StaticString.DefautlRedisConfigSection">
+            <summary>
+            默认的reids配置路径
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Common.StaticString.LogEnableTraceSQLString">
+            <summary>
+            The log enable trace SQL string
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Common.StaticString.LogEnableTraceTimeConsumingString">
+            <summary>
+            The log enable trace time consuming string
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Common.StaticString.LogEnableTraceUserBehaviorString">
+            <summary>
+            The log enable trace user behavior string
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.ConfigManager.AppConfig">
+            <summary>
+                配置文件类
+            </summary>
+            <remarks>
+                [2012-03-11]
+            </remarks>
+        </member>
+        <member name="P:Coralcode.Framework.ConfigManager.AppConfig.AppSettings">
+            <summary>
+                获取AppSettings下的节点值
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.ConfigManager.AppConfig.ConnectionStrings">
+            <summary>
+                获取ConnectionStrings下的节点值
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.ConfigManager.AppConfig.DllConfigs">
+            <summary>
+                获取DLL配置文件
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.ConfigManager.AppConfig.GetRelativePath(System.String)">
+            <summary>
+                获取DllConfig的相对路径
+            </summary>
+            <param name="dllConfigName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.ConfigManager.AppConfig.GetAbsolutePath(System.String)">
+            <summary>
+                获取DllConfig的绝对路径
+            </summary>
+            <param name="dllConfigName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.ConfigManager.AppConfig.GetFileByAbsolutePath(System.String)">
+            <summary>
+                获取DllConfig的绝对路径
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.ConfigManager.AppConfig.IsExists(System.String)">
+            <summary>
+                检查DllConfig是否存在
+            </summary>
+            <param name="dllConfigName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.ConfigManager.AppSet">
+            <summary>
+                管理AppSettings节点
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.ConfigManager.AppSet.Item(System.String)">
+            <summary>
+                获取AppSettings下的节点值
+            </summary>
+            <param name="keyName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.ConfigManager.DbConnectionSet">
+            <summary>
+                管理连接字符串
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.ConfigManager.DbConnectionSet.Item(System.String)">
+            <summary>
+                读取连接字符串
+            </summary>
+            <param name="connName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.ConfigManager.DllItem">
+            <summary>
+                管理配置文件条目下的配置项
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.ConfigManager.DllItem.Item(System.String)">
+            <summary>
+                读取或设置配置文件条目下的配置项
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.ConfigManager.DllItem.Save">
+            <summary>
+                保存配置信息
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.ConfigManager.DllItem.Refresh">
+            <summary>
+                重新读取配置信息
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.ConfigManager.DllItem.ToDictionary">
+            <summary>
+                返回全部配置项的键值对
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.ConfigManager.DllSet">
+            <summary>
+                管理配置文件
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.ConfigManager.DllSet.Item(System.String)">
+            <summary>
+                读取或设置配置文件
+            </summary>
+            <param name="configName"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Coralcode.Framework.ConfigManager.DllSet.Current">
+            <summary>
+                读取当前DLL的配置文件
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.ConfigManager.DllTable">
+            <summary>
+                管理配置文件条目
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.ConfigManager.DllTable.Item(System.String)">
+            <summary>
+                读取或设置配置文件条目
+            </summary>
+            <param name="configItemName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Contexts.AppContext">
+            <summary>
+            应用上下文
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Contexts.AppContext.CreateUserContext(Coralcode.Framework.Models.UserModel)">
+            <summary>
+            创建用户上下文
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Contexts.AppContext.HasChildExists(System.String)">
+            <summary>
+            移除usercontext
+            </summary>
+            <param name="userKey"></param>
+        </member>
+        <member name="T:Coralcode.Framework.Contexts.Context">
+            <summary>
+            上下文
+            </summary>
+        </member>
+        <member name="E:Coralcode.Framework.Contexts.Context.Dispised">
+            <summary>
+            销毁的时候发出的事件
+            </summary>
+        </member>
+        <member name="E:Coralcode.Framework.Contexts.Context.ClearEventHandle">
+            <summary>
+            清空触发事件
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Contexts.Context.Cache">
+            <summary>
+            缓存
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Contexts.Context.CacheKey">
+            <summary>
+            hashset的key
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Contexts.Context.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Contexts.Context.Get``1(System.String,System.Func{``0})">
+            <summary>
+            使用方式
+             Cache.Instance.GetFormCache(MethodBase.GetCurrentMethod().ToString(), Action);
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dataKey"></param>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Contexts.Context.Get``1(System.String)">
+            <summary>
+            获取缓存对象
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dataKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Contexts.Context.Remove(System.String)">
+            <summary>
+            获取缓存对象
+            </summary>
+            <param name="dataKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Contexts.Context.Set``1(System.String,``0)">
+            <summary>
+            设置缓存对象
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dataKey"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Contexts.Context.Clear">
+            <summary>
+            清空
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Contexts.ContextCollection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Contexts.ContextCollection.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Contexts.ContextCollection.Initialize">
+            <summary>
+            初始化
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Contexts.ContextCollection.Refresh">
+            <summary>
+            定时刷新LastTime
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Contexts.ContextCollection.Scan(System.Object)">
+            <summary>
+            Context扫描
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Contexts.ContextCollection.ScanInternal">
+            <summary>
+            实现Context扫描
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Contexts.ContextCollection.GetSessionKey(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="originalKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Contexts.IContextOperation.Refresh">
+            <summary>
+            定时刷新LastTime
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Contexts.IContextOperation.Scan(System.Object)">
+            <summary>
+            扫描Redis
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="T:Coralcode.Framework.Contexts.PageContext">
+            <summary>
+            页面上下文
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Contexts.PageContext.SessionContext">
+            <summary>
+            会话上下文
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Contexts.PageContext.UserContext">
+            <summary>
+            用户上下文
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Contexts.PageContext.AppContext">
+            <summary>
+            应用上下文
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Contexts.PlatformContext">
+            <summary>
+            平台上下文
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Contexts.SessionContext">
+            <summary>
+            会话上下文
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Contexts.SessionContext.TimeOut">
+            <summary>
+            移除PageContext
+            </summary>
+            <param name="pageKey"></param>
+        </member>
+        <member name="P:Coralcode.Framework.Contexts.SessionContext.UserContext">
+            <summary>
+            用户上下文
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Contexts.SessionContext.AppContext">
+            <summary>
+            应用上下文
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Contexts.UserContext">
+            <summary>
+            用户上下文
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Contexts.UserContext.CreateSessionContext(System.String)">
+            <summary>
+            创建一个会话的上下文
+            </summary>
+            <param name="sessionKey"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Coralcode.Framework.Contexts.UserContext.AppContext">
+            <summary>
+            应用上下文
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.DataSetExtensions.ImportBySheetName(System.Data.DataTable,System.IO.Stream,System.String,System.Int32)">
+            <summary>
+            按照sheet的名称导入
+            </summary>
+            <param name="table"></param>
+            <param name="stream"></param>
+            <param name="sheetName"></param>
+            <param name="rowIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.DataSetExtensions.ImportBySheetIndex(System.Data.DataTable,System.IO.Stream,System.Int32,System.Int32)">
+            <summary>
+            按照sheet的索引导入
+            </summary>
+            <param name="table"></param>
+            <param name="stream"></param>
+            <param name="sheetIndex"></param>
+            <param name="rowIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.DataSetExtensions.Export(System.Data.DataTable)">
+            <summary>
+            导出
+            </summary>
+            <param name="table"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.DataSetExtensions.Export(System.Data.DataTable,System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean)">
+            <summary>
+            按照列名导出
+            </summary>
+            <param name="table"></param>
+            <param name="header"></param>
+            <param name="focusHeader">是否只导出对应的列</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.DataTableExtensions.Import``1(System.Data.DataTable,System.Collections.Generic.IList{``0})">
+            <summary>
+            将一个列表转换成DataTable,如果列表为空将返回空的DataTable结构
+            </summary>
+            <typeparam name="T">要转换的数据类型</typeparam>
+            <param name="dt"></param>
+            <param name="entityList">实体对象列表</param> 
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.DataTableExtensions.ToEntityList``1(System.Data.DataTable)">
+            <summary>
+            将一个DataTable转换成列表
+            </summary>
+            <typeparam name="T">实体对象的类型</typeparam>
+            <param name="dt">要转换的DataTable</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.DataTableExtensions.AddColumn(System.Data.DataTable,System.String,System.Type)">
+            <summary>
+            增加一列
+            </summary>
+            <param name="dt"></param>
+            <param name="column"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.ListExtensions.Export``1(System.Collections.Generic.List{``0})">
+            <summary>
+            把list转换成数据表,
+             todo 这里如果属性是类，需要从类里面取一个字段作为值
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.ListExtensions.Import``1(System.Collections.Generic.List{``0},System.Data.DataTable,System.Collections.Generic.List{Coralcode.Framework.Services.ImportMessage}@)">
+            <summary>
+            把数据表转换成List
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+            <param name="dt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.ListExtensions.ExportWithDescription``1(System.Collections.Generic.List{``0})">
+            <summary>
+            把list转换成数据表,
+             todo 这里如果属性是类，需要从类里面取一个字段作为值
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entities"></param>
+            <param name="focusHeader"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.ListExtensions.ImportWithDescription``1(System.Collections.Generic.List{``0},System.Data.DataTable,System.Collections.Generic.List{Coralcode.Framework.Services.ImportMessage}@)">
+            <summary>
+            把数据表转换成List
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+            <param name="dt"></param>
+            <param name="errorMessages">错误信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.EntityExtensions.GetValueByPropery``1(``0,System.String)">
+            <summary>
+            根据属性获取值
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+            <param name="propertyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.EntityExtensions.SetValueByPropery``1(``0,System.String,System.Object)">
+            <summary>
+            根据属性设置值
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+            <param name="propertyName"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <!-- 对于成员“M:Coralcode.Framework.Extensions.EntityExtensions.GetPropertyAndDescriptings(System.Type)”忽略有格式错误的 XML 注释 -->
+        <member name="M:Coralcode.Framework.Extensions.EntityExtensions.GetPrivateField``1(System.Object,System.String)">
+            <summary>
+            获取私有字段
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="instance"></param>
+            <param name="fieldname"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.EntityExtensions.SetPrivateField(System.Object,System.String,System.Object)">
+            <summary>
+            设置私有字段
+            </summary>
+            <param name="instance"></param>
+            <param name="fieldname"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.EntityExtensions.GetPrivateProperty``1(System.Object,System.String)">
+            <summary>
+            获取私有属性
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="instance"></param>
+            <param name="propertyname"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.EntityExtensions.SetPrivateProperty(System.Object,System.String,System.Object)">
+            <summary>
+            设置私有属性
+            </summary>
+            <param name="instance"></param>
+            <param name="propertyname"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.EntityExtensions.ExecuteMethod``1(System.Object,System.String,System.Object[])">
+            <summary>
+            执行方法 公有/私有
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="instance"></param>
+            <param name="name"></param>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.EntityExtensions.ExecuteParentMethod``1(System.Object,System.Type,System.String,System.Object[])">
+            <summary>
+            执行父类的方法
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="instance"></param>
+            <param name="parentType"></param>
+            <param name="name"></param>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.LinqExtensions.Orderby``1(System.Linq.IQueryable{``0},System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.Linq.Expressions.Expression{System.Func{``0,System.String}},System.Boolean}})">
+            <summary>
+            扩展表达式排序功能，主要用于在数据库中，
+            由于属性是string类型这样限制了此功能
+            有待后续采取更好的解决方案
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="items"></param>
+            <param name="orderByExpressions"> 排序表达式的列表，</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.LinqExtensions.IndexOf``1(System.Collections.Generic.IEnumerable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            查找对象的位置
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="items"></param>
+            <param name="expression"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.LinqExtensions.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <summary>
+            扩展List的ForEach到IEnumerable
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="items"></param>
+            <param name="action"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.LinqExtensions.DistinctBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>
+            去重
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="source"></param>
+            <param name="keySelector"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Extensions.StringExtensions.ToSbc(System.String)">
+            <summary>
+            转全角的函数(SBC case)
+            全角空格为12288，半角空格为32
+            其他字符半角(33-126)与全角(65281-65374)的对应关系是：均相差65248
+            </summary>
+            <param name="input">任意字符串</param>
+            <returns>全角字符串</returns>
+        </member>
+        <!-- 对于成员“M:Coralcode.Framework.Extensions.StringExtensions.ToDbc(System.String)”忽略有格式错误的 XML 注释 -->
+        <member name="T:Coralcode.Framework.Log.PerformanceWatchLogAttribute">
+            <summary>
+            性能监控日志输出属性类
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Log.TimeConsumingLogAttribute">
+            <summary>
+            函数执行耗时日志记录，秒为单位
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Log.ILogger">
+            <summary>
+            Common contract for trace instrumentation. You 
+            can implement this contrat with several frameworks.
+            .NET Diagnostics API, EntLib, Log4Net,NLog etc.
+            <remarks>
+            The use of this abstraction depends on the real needs you have and the specific features  
+            you want to use of a particular existing implementation. 
+             You could also eliminate this abstraction and directly use "any" implementation in your code, 
+            Logger.Write(new LogEntry()) in EntLib, or LogManager.GetLog("logger-name") with log4net... etc.
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Log.ILogger.Debug(System.String,System.Object[])">
+             <summary>
+            写调试信息
+             </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Log.ILogger.Debug(System.String,System.Exception,System.Object[])">
+            <summary>
+            写带异常的Debug信息
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Log.ILogger.Fatal(System.String,System.Object[])">
+             <summary>
+            写崩溃信息
+             </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Log.ILogger.Fatal(System.String,System.Exception,System.Object[])">
+            <summary>
+            写带异常崩溃信息
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Log.ILogger.Info(System.String,System.Object[])">
+            <summary>
+            写基本信息
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Log.ILogger.Info(System.String,System.Exception,System.Object[])">
+            <summary>
+            写带异常的基本信息
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Log.ILogger.Warning(System.String,System.Object[])">
+            <summary>
+            写警告信息
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Log.ILogger.Warning(System.String,System.Exception,System.Object[])">
+            <summary>
+            写带异常的基本信息
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Log.ILogger.Error(System.String,System.Object[])">
+             <summary>
+            写错误信息
+             </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Log.ILogger.Error(System.String,System.Exception,System.Object[])">
+             <summary>
+            写带异常的错误信息
+             </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Log.LoggerFactory">
+            <summary>
+            Log Factory
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Models.DataSourceModel.Index">
+            <summary>
+            顺序
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Models.DataSourceModel.Value">
+            <summary>
+            字段值/子节点
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Models.DataSourceModel.Text">
+            <summary>
+            字段的文本
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Models.DataSourceModel.Class">
+            <summary>
+            样式
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Models.DataSourceModel.IsCurrent">
+            <summary>
+            是否当前步骤
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Models.DataSourceModel.ParentValue">
+            <summary>
+            父节点
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Models.AppModel.Secret">
+            <summary>
+            安全码
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Models.AppModel.Domain">
+            <summary>
+            域名
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Models.PageInfo.PageIndex">
+            <summary>
+            页码
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Models.PageInfo.PageSize">
+            <summary>
+            页大小
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Models.PageInfo.SkipCount">
+            <summary>
+            跳过的条数，固定
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Models.UserModel.Id">
+            <summary>
+            用户id
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Models.UserModel.Account">
+            <summary>
+            账号
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Models.UserModel.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Models.UserModel.ActiveTime">
+            <summary>
+            活跃时间
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Models.UserModel.Token">
+            <summary>
+            登陆的认证信息
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Models.UserModel.Additions">
+            <summary>
+            附加信息
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.Dynamic.ConfigManager.GetXml(System.String,System.Object,System.Xml.XmlDocument)">
+            <summary>
+            创建xml元素
+            </summary>
+            <param name="name"></param>
+            <param name="data"></param>
+            <param name="doc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.Dynamic.ConfigManager.GetValueTypeXml(System.String,System.Object,System.Xml.XmlDocument)">
+            <summary>
+            创建简单类型的xml元素
+            </summary>
+            <param name="name"></param>
+            <param name="data"></param>
+            <param name="doc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.Dynamic.ConfigManager.GetIListXml(System.String,System.Object,System.Xml.XmlDocument)">
+            <summary>
+            获取列表类型的xml
+            </summary>
+            <param name="name"></param>
+            <param name="datas"></param>
+            <param name="doc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.Dynamic.ConfigManager.GetDynamicXml(System.String,System.Object,System.Xml.XmlDocument)">
+            <summary>
+            创建动态类型的xml
+            </summary>
+            <param name="name"></param>
+            <param name="data"></param>
+            <param name="doc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.Dynamic.ConfigManager.GetIDictionaryXml(System.String,System.Object,System.Xml.XmlDocument)">
+            <summary>
+            创建字典类型的xml
+            </summary>
+            <param name="name"></param>
+            <param name="datas"></param>
+            <param name="doc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.Dynamic.ConfigManager.GetCustomXml(System.String,System.Object,System.Xml.XmlDocument)">
+            <summary>
+            创建自定义类
+            </summary>
+            <param name="name"></param>
+            <param name="data"></param>
+            <param name="doc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.IObjectSerializer`1.Load(System.IO.Stream)">
+            <summary>
+            get entity from stream
+            </summary>
+            <param name="stream"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.IObjectSerializer`1.Save(System.IO.Stream,`0)">
+            <summary>
+            save stream in entity  
+            </summary>
+            <param name="stream"></param>
+            <param name="entity"> </param>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.IObjectSerializer`1.LoadFromFile(System.String)">
+            <summary>
+            get entity from file
+            </summary>
+            <param name="filePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.IObjectSerializer`1.SaveInFile(System.String,`0)">
+            <summary>
+            save entity in file
+            </summary>
+            <param name="filePath"></param>
+            <param name="entitiy"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.IObjectSerializer`1.SerializeToMemory(`0)">
+            <summary>
+            Serialize entity to memorystream
+            </summary>
+            <param name="entntiy"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.IObjectSerializer`1.DeserlizeFromMemery(System.IO.MemoryStream)">
+            <summary>
+            get entity from memorystream
+            </summary>
+            <param name="stream"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Serializers.JsonObjectSerializer">
+            <summary>
+            JSON序列化和反序列化辅助类
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.JsonObjectSerializer.JsonSerializer``1(``0)">
+            <summary>
+            JSON序列化
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.JsonObjectSerializer.JsonSerializer(System.Object,System.Type)">
+            <summary>
+            JSON序列化
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.JsonObjectSerializer.JsonDeserialize``1(System.String)">
+            <summary>
+            JSON反序列化
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.JsonObjectSerializer.JsonDeserialize(System.String,System.Type)">
+            <summary>
+            JSON反序列化
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.JsonObjectSerializer.ConvertJsonDateToDateString(System.Text.RegularExpressions.Match)">
+            <summary>
+            将Json序列化的时间由/Date(1294499956278+0800)转为字符串
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.JsonObjectSerializer.ConvertDateStringToJsonDate(System.Text.RegularExpressions.Match)">
+            <summary>
+            将时间字符串转为Json时间
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.XmlObjectSerializer`1.Load(System.IO.Stream)">
+            <summary>
+            get entity from stream
+            Exception :
+                ArgumentNullException
+            </summary>
+            <param name="stream"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.XmlObjectSerializer`1.Save(System.IO.Stream,`0)">
+            <summary>
+            save stream in entity  
+            </summary>
+            <param name="stream"></param>
+            <param name="entity"> </param>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.XmlObjectSerializer`1.LoadFromFile(System.String)">
+            <summary>
+            get entity from file
+            Exception :
+                FileNotFoundException
+            </summary>
+            <param name="filePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.XmlObjectSerializer`1.SaveInFile(System.String,`0)">
+            <summary>
+            save entity in file
+            </summary>
+            <param name="filePath"></param>
+            <param name="entitiy"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.XmlObjectSerializer`1.SerializeToMemory(`0)">
+            <summary>
+            Serialize entity to memorystream
+            </summary>
+            <param name="entntiy"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Serializers.XmlObjectSerializer`1.DeserlizeFromMemery(System.IO.MemoryStream)">
+            <summary>
+            get entity from memorystream
+            </summary>
+            <param name="stream"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.SystemError">
+            <summary>
+            系统错误
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.ConfigError">
+            <summary>
+            配置文件错误
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.ModuleError">
+            <summary>
+            模块错误
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.TypeNotInModule">
+            <summary>
+            类型对应模块未找到
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.ModuleExisted">
+            <summary>
+            类型对应模块未找到
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.IllegalRequest">
+            <summary>
+            非法请求
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.MissParameter">
+            <summary>
+            缺失参数
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.ParamError">
+            <summary>
+            参数错误
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.RequestBodyLengthOverLimit">
+            <summary>
+            请求长度超过限制
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.ObjectAlreadyExists">
+            <summary>
+            记录已存在
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.HeandersMissing">
+            <summary>
+            未能找到请求头信息
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.HeandersError">
+            <summary>
+            请求头信息错误
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.InsufficientAppPermissions">
+            <summary>
+            应用的接口访问权限受限
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.RequestApiNotFound">
+            <summary>
+            接口不存在
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.UserRequestsOutOfRateLimit">
+            <summary>
+            用户请求频次超过上限
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.RemoteServiceError">
+            <summary>
+            远程服务错误
+            <remarks>如：WebUtil在请求某个接口时发生错误抛出此错误</remarks>
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.RemoteServiceRequestFail">
+            <summary>
+            远程服务请求失败
+            <remarks>如：WebUtil在请求某个接口时失败抛出此错误</remarks>
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Exceptions.CoralErrorCode.UnsupportMediatype">
+            <summary>
+            不支持的MediaType
+            <remarks>如需要文件流数据，却传输的文本信息抛出此错误</remarks>
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Exceptions.CoralException">
+            <summary>
+            业务异常
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.GenericsFactory.IGenericsFactory`1">
+            <summary>
+            建议将所有的子类在容器中注册为单例,避免重复创建的性能损耗
+            工厂只负责创建，需要外部自己回收(这里可能是个问题)
+            一，在自己继承工厂,并且将策略的执行放到工厂执行,完成以后销毁
+            例如给出如下方法
+             T Execute(T)(name,func(strategy,T))
+            二,使用调整容器的默认生命周期,通过默认生命周期来控制
+            </summary>
+            <typeparam name="TStrategy"></typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.GenericsFactory.IGenericsFactory`1.SetCreator(System.Func{System.Type,`0})">
+            <summary>
+            可以由外部调用客户来决定如何初始化
+            </summary>
+            <param name="creator"></param>
+        </member>
+        <member name="M:Coralcode.Framework.GenericsFactory.IGenericsFactory`1.Regist(System.Type)">
+            <summary>
+            注册策略
+            </summary>
+            <param name="type"></param>
+        </member>
+        <member name="M:Coralcode.Framework.GenericsFactory.IGenericsFactory`1.GetStrategy(System.String)">
+            <summary>
+            获取策略
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.GenericsFactory.IGenericsFactory`1.GetStrategys">
+            <summary>
+            获取策略名称列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.GenericsFactory.IGenericsFactory`1.GetStrategyType(System.String)">
+            <summary>
+            获取策略的类型
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.GenericsFactory.IGenericsFactory`1.GetStrategyTypes">
+            <summary>
+            获取所有策略的类型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.GenericsFactory.GenericsFactory`1.InitStrategys">
+            <summary>
+            初始化策略
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.GenericsFactory.GenericsFactory`1.Regist(System.Type)">
+            <summary>
+            注册策略
+            </summary>
+            <param name="type"></param>
+        </member>
+        <member name="M:Coralcode.Framework.GenericsFactory.GenericsFactory`1.GetStrategy(System.String)">
+            <summary>
+            获取策略
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.GenericsFactory.GenericsFactory`1.GetStrategys">
+            <summary>
+            获取策略名称列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.GenericsFactory.GenericsFactory`1.GetStrategyType(System.String)">
+            <summary>
+            获取策略的类型
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.GenericsFactory.GenericsFactory`1.GetStrategyTypes">
+            <summary>
+            获取所有策略的类型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Coralcode.Framework.GenericsFactory.StrategyType.In">
+            <summary>
+            传入
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.GenericsFactory.StrategyType.Out">
+            <summary>
+            传出
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.GenericsFactory.ReflectionExtensions.GetStrategy(System.Reflection.MemberInfo)">
+            <summary>
+            获取类型的策略标记
+            如果为空则返回当前类型的名称
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.MessageBus.EventHandlers.Entities.ActionEventHandler`1">
+            <summary>
+            This event handler is an adapter to be able to use an action as <see cref="T:Coralcode.Framework.MessageBus.Event.IEventHandler`1"/> implementation.
+            </summary>
+            <typeparam name="TEventData">Event type</typeparam>
+        </member>
+        <member name="P:Coralcode.Framework.MessageBus.EventHandlers.Entities.ActionEventHandler`1.Action">
+            <summary>
+            Action to handle the event.
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.EventHandlers.Entities.ActionEventHandler`1.#ctor(System.Action{`0})">
+            <summary>
+            Creates a new instance of <see cref="T:Coralcode.Framework.MessageBus.EventHandlers.Entities.ActionEventHandler`1"/>.
+            </summary>
+            <param name="handler">Action to handle the event</param>
+        </member>
+        <member name="T:Coralcode.Framework.MessageBus.EventHandlers.Entities.EntityChangedEventData`1">
+            <summary>
+            Used to pass data for an event that is related to with a changed <see cref="!:IEntity"/> object.
+            </summary>
+            <typeparam name="TEntity">Entity type</typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.EventHandlers.Entities.EntityChangedEventData`1.#ctor(`0)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="entity">Changed entity in this event</param>
+        </member>
+        <member name="T:Coralcode.Framework.MessageBus.EventHandlers.Entities.EntityChangedEventHelper">
+            <summary>
+            Used to trigger entity change events.
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.MessageBus.EventHandlers.Entities.EntityCreatedEventData`1">
+            <summary>
+            This type of event can be used to notify creation of an Entity.
+            </summary>
+            <typeparam name="TEntity">Entity type</typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.EventHandlers.Entities.EntityCreatedEventData`1.#ctor(`0)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="entity">The entity which is created</param>
+        </member>
+        <member name="T:Coralcode.Framework.MessageBus.EventHandlers.Entities.EntityRemoveEventData`1">
+            <summary>
+            This type of event can be used to notify deletion of an Entity.
+            </summary>
+            <typeparam name="TEntity">Entity type</typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.EventHandlers.Entities.EntityRemoveEventData`1.#ctor(`0)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="entity">The entity which is deleted</param>
+        </member>
+        <member name="T:Coralcode.Framework.MessageBus.EventHandlers.Entities.EntityEventData`1">
+            <summary>
+            Used to pass data for an event that is related to with an <see cref="!:IEntity"/> object.
+            </summary>
+            <typeparam name="TEntity">Entity type</typeparam>
+        </member>
+        <member name="P:Coralcode.Framework.MessageBus.EventHandlers.Entities.EntityEventData`1.Entity">
+            <summary>
+            Related entity with this event.
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.EventHandlers.Entities.EntityEventData`1.#ctor(`0)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="entity">Related entity with this event</param>
+        </member>
+        <member name="T:Coralcode.Framework.MessageBus.EventHandlers.Entities.EntityQueryingEventData`1">
+            <summary>
+            Used to pass data for an event that is related to with a changed <see cref="!:IEntity"/> object.
+            </summary>
+            <typeparam name="TEntity">Entity type</typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.EventHandlers.Entities.EntityQueryingEventData`1.#ctor(`0)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="entity">Changed entity in this event</param>
+        </member>
+        <member name="T:Coralcode.Framework.MessageBus.EventHandlers.Entities.EntityModifyEventData`1">
+            <summary>
+            This type of event can be used to notify update of an Entity.
+            </summary>
+            <typeparam name="TEntity">Entity type</typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.EventHandlers.Entities.EntityModifyEventData`1.#ctor(`0,`0)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="newEntity"></param>
+            <param name="oldEntity"></param>
+        </member>
+        <member name="T:Coralcode.Framework.MessageBus.EventHandlers.Entities.IEntityChangedEventHelper">
+            <summary>
+            Used to trigger entity change events.
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.MessageBus.EventHandlers.Entities.NullEntityChangedEventHelper">
+            <summary>
+            Null-object implementation of <see cref="T:Coralcode.Framework.MessageBus.EventHandlers.Entities.IEntityChangedEventHelper"/>.
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.MessageBus.EventHandlers.Entities.NullEntityChangedEventHelper.Instance">
+            <summary>
+            Gets single instance of <see cref="!:NullEventBus"/> class.
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.Event.EventData.#ctor">
+            <summary>
+            Initializes a new instance of <c>EventBus</c> class.
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.Event.EventData.#ctor(Coralcode.Framework.MessageBus.IMessage)">
+            <summary>
+            Initializes a new instace of <c>EventBus</c> class.
+            </summary>
+            <param name="entity">The source entity which raises the domain event.</param>
+        </member>
+        <member name="P:Coralcode.Framework.MessageBus.Event.EventData.MessageEntity">
+            <summary>
+            Gets or sets the source entity from which the domain event was generated.
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.MessageBus.Event.EventData.AssemblyQualifiedEventType">
+            <summary>
+            Gets or sets the assembly qualified type name of the event.
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.MessageBus.Event.EventData.Timestamp">
+            <summary>
+            Gets or sets the date and time on which the event was produced.
+            </summary>
+            <remarks>The format of this date/time value could be various between different
+            systems. Apworks recommend system designer or architect uses the standard
+            UTC date/time format.</remarks>
+        </member>
+        <member name="P:Coralcode.Framework.MessageBus.Event.IDomainEvent.Version">
+            <summary>
+            Gets or sets the version of the domain event.
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.MessageBus.Event.IDomainEvent.Branch">
+            <summary>
+            Gets or sets the branch on which the current domain event exists.
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.MessageBus.Event.IEventData.EventDataId">
+            <summary>
+            事件消息序号
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.MessageBus.Event.IEventData.MessageEntity">
+            <summary>
+            消息信息
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.MessageBus.Event.IEventData.Timestamp">
+            <summary>
+            Gets or sets the date and time on which the event was produced.
+            </summary>
+            <remarks>The format of this date/time value could be various between different
+            systems. Apworks recommend system designer or architect uses the standard
+            UTC date/time format.</remarks>
+        </member>
+        <member name="P:Coralcode.Framework.MessageBus.Event.IEventData.MessageIdentity">
+            <summary>
+            消息的标识
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.MessageBus.Event.IEventData.AssemblyQualifiedEventType">
+            <summary>
+            消息对应的类型信息
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.MessageBus.IHandler`1">
+            <summary>
+            Represents that the implemented classes are message handlers.
+            </summary>
+            <typeparam name="T">The type of the message to be handled.</typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.IHandler`1.Handle(`0)">
+            <summary>
+            Handles the specified message.
+            </summary>
+            <param name="message">The message to be handled.</param>
+        </member>
+        <member name="T:Coralcode.Framework.MessageBus.IMessage">
+            <summary>
+            消息实体
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.MessageBus.IMessageDispatcher">
+            <summary>
+            Represents the message dispatcher.
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.IMessageDispatcher.Clear">
+            <summary>
+            Clears the registration of the message handlers.
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.IMessageDispatcher.DispatchMessage``1(``0)">
+            <summary>
+            Dispatches the message.
+            </summary>
+            <param name="message">The message to be dispatched.</param>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.IMessageDispatcher.DispatchMessage``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            分发多个消息
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="messages"></param>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.IMessageDispatcher.Register``1(System.Type)">
+            <summary>
+            Registers a message handler into message dispatcher.
+            </summary>
+            <typeparam name="T">The type of the message.</typeparam>
+            <param name="handlerType">The handler to be registered.</param>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.IMessageDispatcher.UnRegister``1(System.Type)">
+            <summary>
+            Unregisters a message handler from the message dispatcher.
+            </summary>
+            <typeparam name="T">The type of the message.</typeparam>
+            <param name="handlerType">The handler to be registered.</param>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.IMessageDispatcher.Register``1(Coralcode.Framework.MessageBus.IHandler{``0})">
+            <summary>
+            Registers a message handler into message dispatcher.
+            </summary>
+            <typeparam name="T">The type of the message.</typeparam>
+            <param name="handler">The handler to be registered.</param>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.IMessageDispatcher.UnRegister``1(Coralcode.Framework.MessageBus.IHandler{``0})">
+            <summary>
+            Unregisters a message handler from the message dispatcher.
+            </summary>
+            <typeparam name="T">The type of the message.</typeparam>
+            <param name="handler">The handler to be registered.</param>
+        </member>
+        <member name="E:Coralcode.Framework.MessageBus.IMessageDispatcher.Dispatching">
+            <summary>
+            Occurs when the message dispatcher is going to dispatch a message.
+            </summary>
+        </member>
+        <member name="E:Coralcode.Framework.MessageBus.IMessageDispatcher.DispatchFailed">
+            <summary>
+            Occurs when the message dispatcher failed to dispatch a message.
+            </summary>
+        </member>
+        <member name="E:Coralcode.Framework.MessageBus.IMessageDispatcher.Dispatched">
+            <summary>
+            Occurs when the message dispatcher has finished dispatching the message.
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.MessageBus.MessageDispatcher">
+            <summary>
+            Represents the message dispatcher.
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.MessageDispatcher.RegisterType(Coralcode.Framework.MessageBus.IMessageDispatcher,System.Type)">
+            <summary>
+            Registers the specified handler type to the message dispatcher.
+            </summary>
+            <param name="messageDispatcher">Message dispatcher instance.</param>
+            <param name="handlerType">The type to be registered.</param>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.MessageDispatcher.OnDispatching(Coralcode.Framework.MessageBus.MessageDispatchEventArgs)">
+            <summary>
+            Occurs when the message dispatcher is going to dispatch a message.
+            </summary>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.MessageDispatcher.OnDispatchFailed(Coralcode.Framework.MessageBus.MessageDispatchEventArgs)">
+            <summary>
+            Occurs when the message dispatcher failed to dispatch a message.
+            </summary>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.MessageDispatcher.OnDispatched(Coralcode.Framework.MessageBus.MessageDispatchEventArgs)">
+            <summary>
+            Occurs when the message dispatcher has finished dispatching the message.
+            </summary>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.MessageDispatcher.Clear">
+            <summary>
+            Clears the registration of the message handlers.
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.MessageDispatcher.DispatchMessage``1(``0)">
+            <summary>
+            Dispatches the message.
+            </summary>
+            <param name="message">The message to be dispatched.</param>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.MessageDispatcher.DispatchMessage``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            batch dispatches the messages
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="messages"></param>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.MessageDispatcher.Register``1(System.Type)">
+            <summary>
+            Registers a messagehandlerType into message dispatcher.
+            </summary>
+            <typeparam name="T">The type of the message.</typeparam>
+            <param name="handlerType">The handlerType to be registered.</param>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.MessageDispatcher.UnRegister``1(System.Type)">
+            <summary>
+            Unregisters a messagehandlerType from the message dispatcher.
+            </summary>
+            <typeparam name="T">The type of the message.</typeparam>
+            <param name="handlerType">The handlerType to be registered.</param>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.MessageDispatcher.Register``1(Coralcode.Framework.MessageBus.IHandler{``0})">
+            <summary>
+            Registers a messagehandlerinstance into message dispatcher.
+            </summary>
+            <typeparam name="T">The type of the message.</typeparam>
+            <param name="handler">The handler to be registered.</param>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.MessageDispatcher.UnRegister``1(Coralcode.Framework.MessageBus.IHandler{``0})">
+            <summary>
+            Unregisters a messagehandler from the message dispatcher.
+            </summary>
+            <typeparam name="T">The type of the message.</typeparam>
+            <param name="handler">The handler to be registered.</param>
+        </member>
+        <member name="E:Coralcode.Framework.MessageBus.MessageDispatcher.Dispatching">
+            <summary>
+            Occurs when the message dispatcher is going to dispatch a message.
+            </summary>
+        </member>
+        <member name="E:Coralcode.Framework.MessageBus.MessageDispatcher.DispatchFailed">
+            <summary>
+            Occurs when the message dispatcher failed to dispatch a message.
+            </summary>
+        </member>
+        <member name="E:Coralcode.Framework.MessageBus.MessageDispatcher.Dispatched">
+            <summary>
+            Occurs when the message dispatcher has finished dispatching the message.
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.MessageBus.MessageDispatchEventArgs">
+            <summary>
+            Represents the event data that is generated when dispatching messages.
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.MessageBus.MessageDispatchEventArgs.Message">
+            <summary>
+            Gets or sets the message.
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.MessageBus.MessageDispatchEventArgs.HandlerType">
+            <summary>
+            Gets or sets the type of the message handler.
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.MessageBus.MessageDispatchEventArgs.Handler">
+            <summary>
+            Gets or sets the handler.
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.MessageBus.MessageDispatchEventArgs.Exception">
+            <summary>
+            exception when failed
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.MessageDispatchEventArgs.#ctor">
+            <summary>
+            Initializes a new instance of <c>MessageDispatchEventArgs</c> class.
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.MessageBus.MessageDispatchEventArgs.#ctor(System.Object,System.Type,System.Object)">
+            <summary>
+            Initializes a new instance of <c>MessageDispatchEventArgs</c> class.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="handlerType">The type of the message handler.</param>
+            <param name="handler">The handler.</param>
+        </member>
+        <member name="M:Coralcode.Framework.Modules.DependencyAttribute.#ctor(System.Type[])">
+            <summary>
+            依赖的module类型
+            </summary>
+            <param name="moduleTypes"></param>
+        </member>
+        <member name="P:Coralcode.Framework.Modules.DependencyAttribute.ModuleTypes">
+            <summary>
+             依赖的module类型
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Modules.CoralModule">
+            <summary>
+            模块，用于dll数据库分库
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Modules.CoralModule.Assembly">
+            <summary>
+            获取当前Module相关的程序集
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Modules.CoralModule.Types">
+            <summary>
+            获取当前Module相关的类型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Coralcode.Framework.Modules.CoralModule.Name">
+            <summary>
+            模块名称
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Modules.CoralModule.Prepare">
+            <summary>
+            准备 主要做ioc加载
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Modules.CoralModule.Install">
+            <summary>
+            装载 
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Modules.CoralModule.Installed">
+            <summary>
+            装载完毕
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Modules.CoralModule.UnInstall">
+            <summary>
+            卸载
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Modules.IModuleManager">
+            <summary>
+            模块管理
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Modules.IModuleManager.GetModule(System.Type)">
+            <summary>
+            根据模块中的某个类型获取模块
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Modules.IModuleManager.GetModule(System.String)">
+            <summary>
+            根据模块名字获取
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Modules.IModuleManager.GetModule(System.Func{Coralcode.Framework.Modules.CoralModule,System.Boolean})">
+            <summary>
+            获取模块
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Modules.IModuleManager.GetModules(System.Func{Coralcode.Framework.Modules.CoralModule,System.Boolean})">
+            <summary>
+            获取多个模块
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Modules.IModuleManager.InstallModules">
+            <summary>
+            加载所有的模块
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Modules.IModuleManager.UninstallModules">
+            <summary>
+            卸载所有的module
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Page.DetailPagedList`1.ShowPaginationCount">
+            <summary>
+            两端显示页码与当前页的差值
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Page.DetailPagedList`1.FirstItemIndex">
+            <summary>
+            Begin with 0
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Page.Page.PageIndex">
+            <summary>
+            页码
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Page.Page.PageSize">
+            <summary>
+            页大小
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Page.Page.SkipCount">
+            <summary>
+            跳过的条数，固定
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Mapper.IDataMapper.Convert``2(``0,``1,System.Object)">
+            <summary>
+            带配置文件的转换
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TTarget"></typeparam>
+            <param name="source"></param>
+            <param name="target"></param>
+            <param name="config">配置文件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Mapper.IDataMapper.Convert``2(``0,System.Object)">
+            <summary>
+            带配置文件的转换
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TTarget"></typeparam>
+            <param name="source"></param>
+            <param name="config">配置文件</param>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Reflection.ReflectionExtensions">
+            <summary>
+            反射相关扩展
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Reflection.AssemblyFinder.ReferencedAssemblies">
+            <summary>
+            加载所有的程序集
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Reflection.AttributeFinder.GetFieldAttribute``1(System.Type,System.String)">
+            <summary>
+            获取成员特性,如枚举成员
+            </summary>
+            <typeparam name="TAttribute"></typeparam>
+            <param name="type"></param>
+            <param name="fieldName"></param>
+            <returns></returns>
+        </member>
+        <!-- 对于成员“M:Coralcode.Framework.Reflection.AttributeFinder.GetEnumMemberCustomerDescriptions``1(System.Type)”忽略有格式错误的 XML 注释 -->
+        <member name="T:Coralcode.Framework.Reflection.MetaDataManager">
+            <summary>
+            元数据管理
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Reflection.MetaDataManager.Assembly">
+            <summary>
+            获取程序集
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Reflection.MetaDataManager.Type">
+            <summary>
+            获取类型
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Reflection.MetaDataManager.Attribute">
+            <summary>
+            获取特性
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Resources.InValidWords">
+            <summary>
+              一个强类型的资源类，用于查找本地化的字符串等。
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Resources.InValidWords.ResourceManager">
+            <summary>
+              返回此类使用的缓存的 ResourceManager 实例。
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Resources.InValidWords.Culture">
+            <summary>
+              使用此强类型资源类，为所有资源查找
+              重写当前线程的 CurrentUICulture 属性。
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Resources.InValidWords.SmsInvalidWords">
+            <summary>
+              查找类似 /聚宝金融集团/房地产/地产商/地产开发/江贼民/tataUFO/益投网贷/限量版/返点卡/周年/钥匙扣/天水生活网/美乐商城/中国牛仔服饰网/大奖/一等奖/二等奖/特等奖/代开/全民富联盟/艾美美妆/华荣超市/欢乐庆店/2周年/真人/登录官网/特约/赞助/促销/李克强/央企/中移动/常务会议/不整顿/任人唯亲/K粉/地产/中奖/安理会/白粉/绑架/报仇/抗议/暴乱/暴政/爆炸装置/北京当局/精液/避孕套/藏独/操B/操逼/操你/抽奖/慈善/贷款/弹劾/弹药/党专制/倒卖/盗卖/抵押/抵制/电信公司/动乱/毒品/毒瘾/放款/坟墓/封杀/封锁/睾丸/个股/共产党/股指/龟头/国家领导/国家主席/国家总统/黑火药/黑社会/护法/火葬/鸡巴/集会/监听器/监狱/讲法/可卡因/刻章/恐怖主义/联通公司/两性视频/流氓/留学/六合彩/楼盘/卵巢/乱伦/轮奸/裸体/迷昏药/迷魂药/迷奸药/谋杀/穆斯林/你妈/牛股/牛市/迫害/菩萨/枪毙/枪支/强暴/强奸/抢购/抢劫/情色/全球通/权威/人大代表/人权/蹂躏/乳房/软禁/三级片/三陪/三唑仑/三唑伦/散户/桑拿/骚逼/色情/杀人/杀手/傻逼/少妇/射精/伸冤/尸/示威/兽 [字符串的其余部分被截断]&quot;; 的本地化字符串。
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Services.CrudCoralService`5.EventBus">
+            <summary>
+            这里为了隐藏事件总线这一复杂东西
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Services.CrudCoralService`5.Convert(`0)">
+            <summary>
+            出来转换
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Services.CrudCoralService`5.Convert(`1)">
+            <summary>
+            进入转换
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Services.CrudCoralService`5.Convert(`1,`0)">
+            <summary>
+            属性赋值
+            </summary>
+            <param name="model"></param>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Services.BatchImportExportService`2.Import(System.String,System.IO.Stream,System.Func{System.Collections.Generic.List{`1},System.Collections.Generic.List{Coralcode.Framework.Services.ImportMessage{`1}}},System.Action{System.Collections.Generic.List{System.Data.DataTable}},System.Action{System.IO.Stream,System.IO.Stream})">
+            <summary>
+            Excel导入大数据
+            </summary>
+            <param name="errorMsgColumn">验证信息导出字段名称</param>
+            <param name="stream">原文件流</param>
+            <param name="valideAndPreProcess">验证以及预处理</param>
+            <param name="saveAction">入库委托</param>
+            <param name="ftpUploadAction">上传委托</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Services.BatchImportExportService`2.ValidViewModel(System.Data.DataTable,System.Func{System.Collections.Generic.List{`1},System.Collections.Generic.List{Coralcode.Framework.Services.ImportMessage{`1}}})">
+            <summary>
+            数据校验
+            </summary>
+            <param name="originalDataTable">Excel转成的DataTable</param>
+            <param name="valideAndPreProcess">校验委托</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Services.BatchImportExportService`2.SetErrorData(System.String,System.Data.DataTable,System.Collections.Generic.List{Coralcode.Framework.Services.ImportMessage{`1}})">
+            <summary>
+            设置错误数据
+            </summary>
+            <param name="columnName">提示消息字段名称</param>
+            <param name="originalDataTable">Excel转成的DataTable</param>
+            <param name="dataList">已校验数据列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Services.BatchImportExportService`2.PutDataInDb(System.Collections.Generic.List{Coralcode.Framework.Services.ImportMessage{`1}},System.Action{System.Collections.Generic.List{System.Data.DataTable}})">
+            <summary>
+            入库
+            </summary>
+            <param name="dataList">数据</param>
+            <param name="saveAction">入库委托</param>
+        </member>
+        <member name="M:Coralcode.Framework.Services.BatchImportExportService`2.Convert2TEntities(System.Collections.Generic.List{`1})">
+            <summary>
+            TViewModel转TEntity
+            </summary>
+            <param name="datas"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Services.BatchImportExportService`2.SliceDataTable(System.Data.DataTable,System.Int32)">
+            <summary>
+            dataTable切块
+            </summary>
+            <param name="blockSize">每块大小</param>
+            <param name="dataTable"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Services.BatchImportExportService`2.EqualsDataTable(System.Int32,System.Int32,System.Data.DataRowCollection,System.Data.DataTable)">
+            <summary>
+            切片块赋值
+            </summary>
+            <param name="count"></param>
+            <param name="size"></param>
+            <param name="rows"></param>
+            <param name="dataTable"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Services.BatchImportExportService`2.ConvertMemoryStream(System.IO.Stream)">
+            <summary>
+            流拷贝
+            </summary>
+            <param name="input"></param>
+            <param name="output"></param>
+        </member>
+        <member name="T:Coralcode.Framework.Services.ICrudCoralService`3">
+            <summary>
+            全功能增删改查服务
+            </summary>
+            <typeparam name="TModel"></typeparam>
+            <typeparam name="TSearch"></typeparam>
+            <typeparam name="TOrder"></typeparam>
+        </member>
+        <member name="T:Coralcode.Framework.Services.ICrudCoralService`2">
+            <summary>
+            默认排序的增删改查服务
+            </summary>
+            <typeparam name="TModel"></typeparam>
+            <typeparam name="TSearch"></typeparam>
+        </member>
+        <member name="T:Coralcode.Framework.Services.ICrudCoralService`1">
+            <summary>
+            默认查询的增删改查服务
+            </summary>
+            <typeparam name="TModel"></typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.Services.ILocalAuthService.FindUser(System.String)">
+            <summary>
+            查询用户数据
+            </summary>
+            <param name="account"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Services.ILocalAuthService.Logout(System.String)">
+            <summary>
+            登出
+            </summary>
+            <param name="account"></param>
+        </member>
+        <member name="F:Coralcode.Framework.Services.LoginState.UnknowException">
+            <summary>
+            未知错误
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Services.LoginState.Success">
+            <summary>
+            成功
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Services.LoginState.UserNotFind">
+            <summary>
+            用户名未找到
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Services.LoginState.PasswordError">
+            <summary>
+            密码错误
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Services.LoginState.UserUnavailable">
+            <summary>
+            用户不可用
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Services.LoginState.UserExpired">
+            <summary>
+            用户已过期
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Services.ImportExportService`3.ExportTemplate">
+            <summary>
+            获取导出数据模板路径
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Services.ImportExportService`3.Export(System.Collections.Generic.List{`0})">
+            <summary>
+            获取导出文件路径
+            </summary>
+            <param name="viewModels"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Services.ImportExportService`3.Import(System.IO.Stream,System.Func{`0,System.Int32,Coralcode.Framework.Services.ImportMessage{`0}},System.Action{`0})">
+            <summary>
+            导入
+            </summary>
+            <param name="stream"></param>
+            <param name="valideAndPreProcess">验证以及预处理</param>
+            <param name="createFunc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Services.ImportExportService`3.Import(System.IO.Stream,System.Func{`0,System.Int32,Coralcode.Framework.Services.ImportMessage{`0}})">
+            <summary>
+            导入
+            </summary>
+            <param name="stream"></param>
+            <param name="valideAndPreProcess">验证以及预处理</param>
+            <returns></returns>
+        </member>
+        <member name="P:Coralcode.Framework.Services.ImportMessage.Index">
+            <summary>
+            行数
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Services.ImportMessage.State">
+            <summary>
+            结果
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Services.ImportMessage.ErrorMessage">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Services.CoralService.Dispose">
+            <summary>
+            销毁对象
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Task.StringMonitor">
+            <summary>
+            字符串粒度的信号量
+            用于需要加锁的情况
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Task.StringMonitor.Lock``1(System.String,System.Func{``0},System.Func{``0},System.Int32)">
+            <summary>
+            执行加锁的方法，
+            </summary>
+            <typeparam name="T">返回结果</typeparam>
+            <param name="key">字符串标识</param>
+            <param name="acceptFunc">进入成功后执行的方法</param>
+            <param name="refuseFunc">拒绝进入后执行的方法</param>
+            <param name="timeout">尝试时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Task.StringMonitor.Lock(System.String,System.Action,System.Int32)">
+            <summary>
+            执行加锁的方法，
+            </summary>
+            <param name="key">字符串标识</param>
+            <param name="acceptFunc">进入成功后执行的方法，保持方法幂等性</param>
+            <param name="timeout">尝试时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Task.StringMonitor.Lock(System.String,System.Action,System.Action,System.Int32)">
+            <summary>
+            执行加锁的方法，
+            </summary>
+            <param name="key">字符串标识</param>
+            <param name="acceptAction">进入成功后执行的方法</param>
+            <param name="refuseAction">拒绝进入后执行的方法</param>
+            <param name="timeout">尝试时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Task.TaskExtensions.AsyncExecuteServiceAction``1(``0,System.String,System.Object[])">
+            <summary>
+            调用示例
+            
+            </summary>
+            <typeparam name="TService"></typeparam>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.ChineseUtil.ToPinyin(System.String)">
+            <summary>
+            转换成拼音
+            </summary>
+            <param name="chineseString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.ChineseUtil.ToShortPinyin(System.String)">
+            <summary>
+            首字母拼音
+            </summary>
+            <param name="chineseString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.ChineseUtil.IsPinyin(System.String)">
+            <summary>
+            判断是否为拼音
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.FtpUtil.GetFileList(System.String)">
+            <summary>
+            获取当前目录下文件列表(仅文件)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.FtpUtil.IsDirectoryExist(System.String)">
+            <summary>
+            判断目录是否存在
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.FtpUtil.CreateDirectory(System.String)">
+            <summary>
+            创建目录
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.FtpUtil.CreateChildDirectory(System.String)">
+            <summary>
+            创建文件夹,只能创建一级
+            如果要创建 path1/path2/path3
+            则path1/path2  比如存在
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.FtpUtil.RemoveDirectory(System.String)">
+            <summary>
+            删除目录
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.FtpUtil.GetDirectoryList(System.String)">
+            <summary>
+            获取当前目录下所有的文件夹列表(仅文件夹)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.FtpUtil.GetFilesDetailList(System.String)">
+            <summary>
+            获取当前目录下明细(包含文件和文件夹)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.FtpUtil.ReplaceProtocolHttp2Ftp(System.String)">
+            <summary>
+            将http转成ftp
+            </summary>
+            <param name="httpUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.PdfUtil.ConvertHtmlTextToPdf(System.String,Coralcode.Framework.Utils.DocumentParam,Coralcode.Framework.Utils.WatermarkSetting,Coralcode.Framework.Utils.StampPoint)">
+            <summary>  
+            将Html文字 输出到PDF档里  
+            </summary>  
+            <param name="htmlText">html文本</param>
+            <param name="param">pdf大小</param>
+            <param name="waterMark">水印</param>
+            <param name="stampPoint">模拟盖章</param>
+            <returns></returns>  
+        </member>
+        <member name="P:Coralcode.Framework.Utils.WatermarkSetting.Text">
+            <summary>
+            水印内容
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Utils.WatermarkSetting.Size">
+            <summary>
+            字体大小
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Utils.StampPoint.Path">
+            <summary>
+            图片路径
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Utils.StampPoint.X">
+            <summary>
+            X轴位置
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Utils.StampPoint.Y">
+            <summary>
+            Y轴位置
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Utils.DocumentParam">
+            <summary>
+            构造文档需要的参数
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.PictureUtil.EncodeFile(System.String)">
+             <summary>
+            将图片编码为64位编码
+             </summary>
+             <param name="fileName"></param>
+             <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.PictureUtil.GeneralThumbnailFileName(System.String)">
+            <summary>
+            生成缩略图的路径
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.PictureUtil.GeneralEnlargedFileName(System.String)">
+            <summary>
+            生成缩略图的路径
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.PictureUtil.MakeThumbnail(System.IO.Stream,System.Int32,System.Int32,System.String,System.IO.Stream@)">
+            <summary>
+            生成缩略图
+            </summary>
+            <param name="originalStream"></param>
+            <param name="thumbnailStream"></param>
+            <param name="width"></param>
+            <param name="height"></param>
+            <param name="mode"></param>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.QrUtil.General(System.String,System.IO.MemoryStream)">
+            <summary>
+            生成二维码
+            </summary>
+            <param name="content">内容</param>
+            <param name="ms">写入的文件流</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.ValidateCodeHelper.CreateCode(System.Int32)">
+            <summary>
+            产生验证码
+            </summary>
+            <param name="codeLength"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.ValidateCodeHelper.CreateValidateGraphic(System.String)">
+            <summary>
+            创建验证码的图片
+            </summary>
+            <param name="validateCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.HttpUtil.GetTimeOut">
+            <summary>
+            默认5分钟
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.HttpUtil.GetHtml(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="host"></param>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.HttpUtil.Get``1(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Request Method:GET
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="host">域名</param>
+            <param name="url">路由</param>
+            <param name="headerValues">Request Headers</param>
+            <param name="dict">URL?参数</param>
+            <param name="token"></param>
+            <returns>发送GET请求，接收返回值</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.HttpUtil.Get``1(System.String,System.String,System.Threading.CancellationToken,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Request Method:GET
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="host">域名</param>
+            <param name="url">路由</param>
+            <param name="headerValues">Request Headers</param>
+            <param name="dict">URL?参数</param>
+            <param name="token">取消</param>
+            <returns>发送GET请求，接收返回值</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.HttpUtil.Delete``1(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Request Method:GET
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="host">域名</param>
+            <param name="url">路由</param>
+            <param name="headerValues">Request Headers</param>
+            <param name="dict">URL?参数</param>
+            <returns>发送GET请求，接收返回值</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.HttpUtil.Delete``1(System.String,System.String,System.Threading.CancellationToken,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Request Method:GET
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="host">域名</param>
+            <param name="url">路由</param>
+            <param name="token"></param>
+            <param name="headerValues">Request Headers</param>
+            <param name="dict">URL?参数</param>
+            <returns>发送GET请求，接收返回值</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.HttpUtil.Post``2(System.String,System.String,``0,System.Threading.CancellationToken,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Request Method:POST
+            </summary>
+            <typeparam name="TParam"></typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="host">域名</param>
+            <param name="url">路由</param>
+            <param name="param">对象</param>
+            <param name="token"></param>
+            <param name="headerValues">Request Headers</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.HttpUtil.Post``2(System.String,System.String,``0,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Request Method:POST
+            </summary>
+            <typeparam name="TParam"></typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="host">域名</param>
+            <param name="url">路由</param>
+            <param name="param">对象</param>
+            <param name="headerValues">Request Headers</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.HttpUtil.Post``1(System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Request Method:POST
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="host">域名</param>
+            <param name="url">路由</param>
+            <param name="jsonParam"></param>
+            <param name="headerValues">Request Headers</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.HttpUtil.Post``1(System.String,System.String,System.String,System.Threading.CancellationToken,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Request Method:POST
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="host">域名</param>
+            <param name="url">路由</param>
+            <param name="jsonParam"></param>
+            <param name="token"></param>
+            <param name="headerValues">Request Headers</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.HttpUtil.Put``2(System.String,System.String,``0,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Request Method:Put
+            </summary>
+            <typeparam name="TParam"></typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="host">域名</param>
+            <param name="url">路由</param>
+            <param name="param">对象</param>
+            <param name="headerValues">Request Headers</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.HttpUtil.Put``2(System.String,System.String,``0,System.Threading.CancellationToken,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Request Method:Put
+            </summary>
+            <typeparam name="TParam"></typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="host">域名</param>
+            <param name="url">路由</param>
+            <param name="param">对象</param>
+            <param name="token"></param>
+            <param name="headerValues">Request Headers</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.HttpUtil.Put``1(System.String,System.String,System.String,System.Threading.CancellationToken,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Request Method:Put
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="host">域名</param>
+            <param name="url">路由</param>
+            <param name="jsonParam"></param>
+            <param name="token"></param>
+            <param name="headerValues">Request Headers</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.HttpUtil.Put``1(System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Request Method:Put
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="host">域名</param>
+            <param name="url">路由</param>
+            <param name="jsonParam"></param>
+            <param name="headerValues">Request Headers</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.HttpUtil.GetFile(System.String)">
+            <summary>
+            获取http文件
+            </summary>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.MailUtil.Send(System.String,System.String,System.String,System.Collections.Generic.List{System.IO.Stream})">
+            <summary>
+             邮件的发送
+            </summary>
+            <param name="toMail">收件人地址（可以是多个收件人，程序中是以“;"进行区分的）</param>
+            <param name="subject">邮件标题</param>
+            <param name="emailBody">邮件内容（可以以html格式进行设计）</param>
+            <param name="attachments"></param>
+        </member>
+        <member name="T:Coralcode.Framework.Utils.MobilePushNotificationUtil">
+            <summary>
+            手机推送
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.MobilePushNotificationUtil.SendAllPush(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            全平台发送通知
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.MobilePushNotificationUtil.SendPush(System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            推送消息
+            </summary>
+            <param name="content">消息内容</param>
+            <param name="pushId">用户标识</param>
+            <returns>推送消息ID</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.MobilePushNotificationUtil.SendPush(System.String,System.String,Coralcode.Framework.Utils.DeviceType,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            推送消息
+            </summary>
+            <param name="notificationTitle"></param>
+            <param name="content">通知内容</param>
+            <param name="message">消息内容</param>
+            <param name="deviceTypes">推送平台</param>
+            <param name="pushId">用户标识</param>
+            <returns>推送消息ID</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.MobilePushNotificationUtil.SendPush(System.String,System.String,System.String,Coralcode.Framework.Utils.DeviceType,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            推送消息
+            </summary>
+            <param name="notificationTitle">通知title</param>
+            <param name="content">通知内容</param>
+            <param name="message">消息内容</param>
+            <param name="deviceTypes">推送平台</param>
+            <param name="pushId">用户标识</param>
+            <param name="keyValueParams">参数</param>
+            <returns>推送消息ID</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.SmsUtil.Send(System.String,System.String)">
+             <summary>
+             
+             </summary>
+             <param name="mobileNumber"></param>
+             <param name="content"></param>
+             <returns>
+             -1	没有该用户账户
+            -2	接口密钥不正确 [查看密钥]不是账户登陆密码
+            -21	MD5接口密钥加密不正确
+            -3	短信数量不足
+            -11	该用户被禁用
+            -14	短信内容出现非法字符
+            -4	手机号格式不正确
+            -41	手机号码为空
+            -42	短信内容为空
+            -51	短信签名格式不正确接口签名格式为：【签名内容】
+            -6	IP限制
+            大于0	短信发送数量
+             </returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.SmsUtil.SendByIpyy(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="mobileNumber"></param>
+            <param name="content"></param>
+            <returns>
+            -1请求异常
+            1发送成功
+            
+            </returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.StringUtil.Format(System.String,System.Object)">
+            <summary>
+            格式化url
+            </summary>
+            <param name="url"></param>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.StringUtil.Format(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            格式化url
+            </summary>
+            <param name="url"></param>
+            <param name="urlParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.StringUtil.GetFirstText(System.String,System.String,System.String)">
+            <summary>
+            获取第一次在两个文本之间的部分
+            </summary>
+            <param name="source"></param>
+            <param name="startString"></param>
+            <param name="endString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.StringUtil.GetLastText(System.String,System.String,System.String)">
+            <summary>
+            获取最后一次在两个文本之间的部分
+            </summary>
+            <param name="htmlText"></param>
+            <param name="startString"></param>
+            <param name="endString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Utils.StringUtil.NoHtml(System.String)">
+            <summary>   
+            清除HTML标记   
+            </summary>   
+            <param name="htmlstring">包括HTML的源码</param>
+            <returns>已经去除后的文字</returns>   
+        </member>
+        <member name="T:Coralcode.Framework.Validator.DataAnnotations.DecimalAttribute">
+            <summary>
+            浮点类型指定整数位、小数位
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Validator.DataAnnotations.DecimalAttribute.#ctor(System.Byte,System.Byte)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="precision">整数位个数</param>
+            <param name="scale">小数位</param>
+        </member>
+        <member name="T:Coralcode.Framework.Validator.EntityValidator">
+            <summary>
+            基于 Data Annotations的验证 
+            使用IValidatableObject 
+            和使用ValidationAttribute来进行验证
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Validator.EntityValidator.SetValidatableObjectErrors``1(``0,System.Collections.Generic.List{System.String})">
+            <summary>
+            接口验证
+            </summary>
+            <param name="item"></param>
+            <param name="errors">当错误列表,ref </param>
+        </member>
+        <member name="M:Coralcode.Framework.Validator.EntityValidator.SetValidationAttributeErrors``1(``0,System.Collections.Generic.List{System.String})">
+            <summary>
+            属性验证
+            </summary>
+            <param name="item"></param>
+            <param name="errors">当错误列表,ref</param>
+        </member>
+        <member name="M:Coralcode.Framework.Validator.EntityValidator.IsValid``1(``0)">
+            <summary>
+            验证
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Validator.EntityValidator.GetInvalidMessages``1(``0)">
+            <summary>
+            获取错误消息
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Validator.EntityValidatorProvider">
+            <summary>
+            Data Annotations 验证提供者
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.Validator.EntityValidatorProvider.Validator">
+            <summary>
+            Create a entity validator
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Validator.IEntityValidator">
+            <summary>
+            实体验证
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Validator.IEntityValidator.IsValid``1(``0)">
+            <summary>
+            验证
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Validator.IEntityValidator.GetInvalidMessages``1(``0)">
+            <summary>
+            获取验证信息
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.WCF.BaseWebService">
+            <summary>
+            基础WebService服务
+            </summary>
+        </member>
+        <member name="P:Coralcode.Framework.WCF.BaseWebService.IsReusable">
+            <summary>
+            其他请求是否可以使用此实例
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.WCF.BaseWebService.ProcessRequest(System.Web.HttpContext)">
+            <summary>
+            执行
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:Coralcode.Framework.WCF.WebServiceHandlerFactory`1">
+            <summary>
+            WebService处理类.
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.WCF.WebServiceHandlerFactory`1.CoreGetHandler">
+            <summary>
+            核心方法反射调用.
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.WCF.WebServiceHandlerFactory`1.#ctor(`0)">
+            <summary>
+            构造函数.
+            </summary>
+            <param name="serviceType"></param>
+        </member>
+        <member name="M:Coralcode.Framework.WCF.WebServiceHandlerFactory`1.System#Web#IHttpHandlerFactory#GetHandler(System.Web.HttpContext,System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <param name="requestType"></param>
+            <param name="url"></param>
+            <param name="pathTranslated"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.WCF.WebServiceHandlerFactory`1.System#Web#IHttpHandlerFactory#ReleaseHandler(System.Web.IHttpHandler)">
+            <summary>
+            
+            </summary>
+            <param name="handler"></param>
+        </member>
+        <member name="M:Coralcode.Framework.WCF.WsUtil.InvokeWebService(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary> 
+            动态调用web服务 
+            </summary> 
+            <param name="url">WSDL服务地址</param> 
+            <param name="methodname">方法名</param> 
+            <param name="args">参数</param> 
+            <returns></returns> 
+        </member>
+        <member name="M:Coralcode.Framework.WCF.WsUtil.InvokeWebService(System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            动态调用web服务 
+            </summary>
+            <param name="url">WSDL服务地址</param>
+            <param name="classname">类名</param>
+            <param name="methodname">方法名</param>
+            <param name="args">参数</param>
+            <returns></returns>
+        </member>
+        <member name="T:Coralcode.Framework.Web.CoralCookies">
+            <summary>
+            <para>　</para>
+            　常用工具类——COOKIES操作类
+            <para>　-------------------------------------------------------------------</para>
+            <para>　WriteCookie：创建COOKIE对象并赋Value值或值集合 [+4重载]</para>
+            <para>　GetCookie：读取Cookie某个对象的Value值，返回Value值，如果对象本就不存在，则返回null</para>
+            <para>　DelCookie：删除COOKIE对象</para>
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Web.CoralCookies.WriteCookies(System.String,System.String,System.Int32)">
+            <summary>
+            创建COOKIE对象并赋Value值
+            </summary>
+            <param name="cookiesName">COOKIE对象名</param>
+            <param name="IExpires">COOKIE对象有效时间（秒数），1表示永久有效，0和负数都表示不设有效时间，大于等于2表示具体有效秒数，31536000秒=1年=(60*60*24*365)，</param>  
+            <param name="cookiesValue">COOKIE对象Value值</param>
+        </member>
+        <member name="M:Coralcode.Framework.Web.CoralCookies.WriteCookies(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            创建COOKIE对象并赋Value值
+            </summary>
+            <param name="cookiesName">COOKIE对象名</param>
+            <param name="IExpires">COOKIE对象有效时间（秒数），1表示永久有效，0和负数都表示不设有效时间，大于等于2表示具体有效秒数，31536000秒=1年=(60*60*24*365)，</param>  
+            <param name="cookiesValue">COOKIE对象Value值</param>
+            <param name="CookiesDomain">作用域</param>
+        </member>
+        <member name="M:Coralcode.Framework.Web.CoralCookies.WriteCookies(System.String,System.Int32,System.Collections.Specialized.NameValueCollection)">
+            <summary>   
+            创建COOKIE对象并赋多个KEY键值   
+            设键/值如下：   
+            NameValueCollection myCol = new NameValueCollection();   
+            myCol.Add("red", "rojo");   
+            myCol.Add("green", "verde");   
+            myCol.Add("blue", "azul");   
+            myCol.Add("red", "rouge");   结果“red:rojo,rouge；green:verde；blue:azul”   
+            </summary>   
+            <param name="cookiesName">COOKIE对象名</param>   
+            <param name="expires">COOKIE对象有效时间（秒数），1表示永久有效，0和负数都表示不设有效时间，大于等于2表示具体有效秒数，31536000秒=1年=(60*60*24*365)，</param>   
+            <param name="cookiesKeyValueCollection">键/值对集合</param> 
+        </member>
+        <member name="M:Coralcode.Framework.Web.CoralCookies.WriteCookies(System.String,System.Int32,System.Collections.Specialized.NameValueCollection,System.String)">
+            <summary>   
+            创建COOKIE对象并赋多个KEY键值   
+            设键/值如下：   
+            NameValueCollection myCol = new NameValueCollection();   
+            myCol.Add("red", "rojo");   
+            myCol.Add("green", "verde");   
+            myCol.Add("blue", "azul");   
+            myCol.Add("red", "rouge");   结果“red:rojo,rouge；green:verde；blue:azul”   
+            </summary>   
+            <param name="cookiesName">COOKIE对象名</param>   
+            <param name="expires">COOKIE对象有效时间（秒数），1表示永久有效，0和负数都表示不设有效时间，大于等于2表示具体有效秒数，31536000秒=1年=(60*60*24*365)，</param>   
+            <param name="cookiesKeyValueCollection">键/值对集合</param> 
+            <param name="cookiesDomain">作用域</param>
+        </member>
+        <member name="M:Coralcode.Framework.Web.CoralCookies.ExistCookies(System.String)">
+            <summary>
+            判断Cookie是否存在
+            </summary>
+            <param name="cookiesName">Cookie对象名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Web.CoralCookies.ExistCookies(System.String,System.String)">
+            <summary>
+            判断Cookie的某个键是否存在
+            </summary>
+            <param name="cookiesName">Cookie对象名称</param>
+            <param name="keyName">键值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Web.CoralCookies.GetCookies(System.String)">
+            <summary>
+            读取Cookie某个对象的Value值，返回Value值，如果对象本就不存在，则返回null
+            </summary>
+            <param name="cookiesName">Cookie对象名称</param>
+            <returns>返回对象的Value值，返回Value值，如果对象本就不存在，则返回null</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Web.CoralCookies.GetCookies(System.String,System.String)">
+            <summary>
+            读取Cookie某个对象的Value值，返回Value值，如果对象本就不存在，则返回null
+            </summary>
+            <param name="cookiesName">Cookie对象名称</param>
+            <param name="keyName">键值</param>
+            <returns>返回对象的Value值，返回Value值，如果对象本就不存在，则返回null</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Web.CoralCookies.DelCookie(System.String)">
+            <summary>
+            删除COOKIE对象
+            </summary>
+            <param name="cookiesName">Cookie对象名称</param>
+        </member>
+        <member name="M:Coralcode.Framework.Web.CoralCookies.Clear">
+            <summary>
+            清空COOKIE对象
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Web.CoralPublicKeys">
+            <summary>
+            公共常量、KEY及其他字段属性
+            2015-05-12
+            马超
+            </summary>
+        </member>
+        <member name="F:Coralcode.Framework.Web.CoralPublicKeys.LoginInfo">
+            <summary>
+            获取Session中用户信息 KEY
+            </summary>
+        </member>
+        <member name="T:Coralcode.Framework.Web.CoralSession">
+            <summary>
+            <para>　</para>
+            　常用工具类——Session操作类
+            <para>　----------------------------------------------------------</para>
+            <para>　AddSession：添加Session,有效期为默认</para>
+            <para>　AddSession：添加Session，并调整有效期为分钟或几年</para>
+            <para>　GetSession：读取某个Session对象值</para>
+            <para>　DelSession：删除某个Session对象</para>
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Web.CoralSession.Add(System.String,System.Object)">
+            <summary>
+            添加Session,有效期为默认
+            </summary>
+            <param name="strSessionName">Session对象名称</param>
+            <param name="strValue">Session值</param>
+        </member>
+        <member name="M:Coralcode.Framework.Web.CoralSession.Set(System.String,System.Object,System.Int32,System.Int32)">
+            <summary>
+            添加Session，并调整有效期为分钟或几年
+            </summary>
+            <param name="strSessionName">Session对象名称</param>
+            <param name="strValue">Session值</param>
+            <param name="iExpires">分钟数：大于０则以分钟数为有效期，等于０则以后面的年为有效期</param>
+            <param name="iYear">年数：当分钟数为０时按年数为有效期，当分钟数大于０时此参数随意设置</param>
+        </member>
+        <member name="M:Coralcode.Framework.Web.CoralSession.Get(System.String)">
+            <summary>
+            读取某个Session对象值
+            </summary>
+            <param name="strSessionName">Session对象名称</param>
+            <returns>Session对象值</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Web.CoralSession.Remove(System.String)">
+            <summary>
+            删除某个Session对象
+            </summary>
+            <param name="strSessionName">Session对象名称</param>
+        </member>
+        <member name="M:Coralcode.Framework.Web.CoralSession.Clear">
+            <summary>
+            清空Session对象
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Web.CoralSession.Exists(System.String)">
+            <summary>
+            检查session是否存在key
+            </summary>
+            <param name="sessionKey">session键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Security.CoralSecurity.AesEncrypt(System.String,System.String)">
+            <summary>
+            ase加密
+            </summary>
+            <param name="input"></param>
+            <param name="key">大于16位自动截断</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Security.CoralSecurity.AesDecrypt(System.String,System.String)">
+            <summary>
+            解密
+            </summary>
+            <param name="input"></param>
+            <param name="key">大于16位自动截断</param>
+            <returns></returns>
+        </member>
+        <member name="F:Coralcode.Framework.Security.CoralSecurity._desKey">
+            <summary>
+            32位Key值：
+            </summary>
+        </member>
+        <member name="M:Coralcode.Framework.Security.CoralSecurity.DesEncrypt(System.String)">
+            <summary>
+            DES加密
+            </summary>
+            <param name="strSource">待加密字串</param>
+            <returns>加密后的字符串</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Security.CoralSecurity.DesEncrypt(System.String,System.Byte[])">
+            <summary>
+            DES加密
+            </summary>
+            <param name="strSource">待加密字串</param>
+            <param name="key">Key值</param>
+            <returns>加密后的字符串</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Security.CoralSecurity.DesDecrypt(System.String)">
+            <summary>
+            DES解密
+            </summary>
+            <param name="strSource">待解密的字串</param>
+            <returns>解密后的字符串</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Security.CoralSecurity.DesDecrypt(System.String,System.Byte[])">
+            <summary>
+            DES解密
+            </summary>
+            <param name="strSource">待解密的字串</param>
+            <param name="key">32位Key值</param>
+            <returns>解密后的字符串</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Security.CoralSecurity.Md5(System.String)">
+            <summary>
+            MD5函数,需引用：using System.Security.Cryptography;
+            </summary>
+            <param name="str">原始字符串</param>
+            <returns>MD5结果</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Security.CoralSecurity.Md5(System.IO.Stream)">
+            <summary>
+            MD5函数,需引用：using System.Security.Cryptography;
+            </summary>
+            <param name="stream">原始字符串</param>
+            <returns>MD5结果</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Security.CoralSecurity.Md5(System.Byte[])">
+            <summary>
+            MD5函数,需引用：using System.Security.Cryptography;
+            </summary>
+            <param name="bytes">原始字节</param>
+            <returns>MD5结果</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Security.CoralSecurity.Sha1CreateKey">
+            <summary>
+            创建公钥，秘钥对
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Security.CoralSecurity.Sha1HashAndSignString(System.String,System.String)">
+            <summary>
+            数字签名
+            </summary>
+            <param name="plaintext">原文</param>
+            <param name="privateKey">私钥</param>
+            <returns>签名</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Security.CoralSecurity.Sha1VerifySigned(System.String,System.String,System.String)">
+            <summary>
+            验证签名
+            </summary>
+            <param name="plaintext">原文</param>
+            <param name="signedData">签名</param>
+            <param name="publicKey">公钥</param>
+            <returns></returns>
+        </member>
+        <member name="M:Coralcode.Framework.Security.CoralSecurity.Sha256(System.String)">
+            <summary>
+            SHA256函数
+            </summary>
+            /// <param name="str">原始字符串</param>
+            <returns>SHA256结果</returns>
+        </member>
+        <member name="M:Coralcode.Framework.Security.CoralSecurity.SymmetricGetLegalKey">
+            <summary>   
+            获得密钥   
+            </summary>   
+            <returns>密钥</returns>   
+        </member>
+        <member name="M:Coralcode.Framework.Security.CoralSecurity.SymmetricGetLegalIv">
+            <summary>   
+            获得初始向量IV   
+            </summary>   
+            <returns>初试向量IV</returns>   
+        </member>
+        <member name="M:Coralcode.Framework.Security.CoralSecurity.SymmetricEncrypt(System.String)">
+            <summary>   
+            加密方法   
+            </summary>   
+            <param name="source">待加密的串</param>   
+            <returns>经过加密的串</returns>   
+        </member>
+        <member name="M:Coralcode.Framework.Security.CoralSecurity.SymmetricDecrypt(System.String)">
+            <summary>   
+            解密方法   
+            </summary>   
+            <param name="source">待解密的串</param>   
+            <returns>经过解密的串</returns>   
+        </member>
+    </members>
+</doc>

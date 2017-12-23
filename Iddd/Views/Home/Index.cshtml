@@ -1,0 +1,76 @@
+﻿
+@{
+    Html.AppendCssFileParts("~/Administration/Content/ionicons/css/ionicons-2.0.1.min.css");
+
+    //page title
+    ViewBag.Title = "";
+
+   
+}
+
+@Html.AntiForgeryToken()
+<div class="content-header">
+    <h1>
+        Admin.Dashboard
+    </h1>
+</div>
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+         
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.Action("CommonStatistics", "Home")
+                    </div>
+                </div>
+          
+                <div class="row">
+                    @if (!Model.IsLoggedInAsVendor)
+                    {
+                        <div class="col-md-6">
+                            @Html.Action("OrderStatistics", "Order")
+                        </div>
+                    }
+                    @if (!Model.IsLoggedInAsVendor)
+                    {
+                        <div class="col-md-6">
+                            @Html.Action("CustomerStatistics", "Customer")
+                        </div>
+                    }
+                </div>
+         
+                <div class="row">
+                    <div class="col-md-8">
+                        @Html.Action("OrderAverageReport", "Order")
+                    </div>
+                    <div class="col-md-4">
+                        @Html.Action("OrderIncompleteReport", "Order")
+                    </div>
+                </div>
+          
+                <div class="row">
+                   
+                        <div class="col-md-8">
+                            @Html.Action("LatestOrders", "Order")
+                        </div>
+                    
+                    <div class="col-md-4">
+                       
+                            @Html.Action("PopularSearchTermsReport", "Common")
+                        
+                    </div>
+                </div>
+          
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.Action("BestsellersBriefReportByQuantity", "Order")
+                    </div>
+                    <div class="col-md-6">
+                        @Html.Action("BestsellersBriefReportByAmount", "Order")
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+</div>
