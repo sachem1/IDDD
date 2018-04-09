@@ -5,3 +5,6 @@ H:\Personal\Project\Iddd\ConsoleApp\bin\Debug\ConsoleApp.exe
 H:\Personal\Project\Iddd\ConsoleApp\bin\Debug\ConsoleApp.pdb
 H:\Personal\Project\Iddd\ConsoleApp\obj\Debug\ConsoleApp.exe
 H:\Personal\Project\Iddd\ConsoleApp\obj\Debug\ConsoleApp.pdb
+E:\Work\Demo\IDDD\ConsoleApp\bin\Debug\ConsoleApp.exe.config
+E:\Work\Demo\IDDD\ConsoleApp\obj\Debug\ConsoleApp.exe
+E:\Work\Demo\IDDD\ConsoleApp\obj\Debug\ConsoleApp.pdb
